@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/app/Module_6/./04_redirecting_streams_input_error.py", line 3, in <module>
+    data = input("This will come from STDIN: ")
+EOFError: EOF when reading a line

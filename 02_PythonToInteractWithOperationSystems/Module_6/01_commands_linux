@@ -1,0 +1,56 @@
+mkdir mynewdir
+# Comando para crear un directorio:
+cd mynewdir/
+
+# Comando para imprimir el directorio actual:
+/mynewdir$ pwd
+
+# Comando para copiar un archivo de un directorio a otro directorio:
+/mynewdir$ cp ../spider.txt .
+
+# Comando para crear un archivo vacio:
+/mynewdir$ touch myfile.txt
+
+# Comando listar los objetos (total objetos, permisos, fecha de creación, nombre) dentro de la ruta actual:
+/mynewdir$ ls -l 
+#Output:
+#-rw-rw-r-- 1 user user   0 Mai 22 14:22 myfile.txt
+#-rw-rw-r-- 1 user user 192 Mai 22 14:18 spider.txt
+
+# Comando listar los objetos (total objetos, permisos, fecha de creación, nombre) dentro de la ruta actual:
+/mynewdir$ ls -la
+#Output:
+#total 12
+#drwxr-xr-x  2 user user  4096 Mai 22 14:17 .
+#drwxr-xr-x 56 user user 12288 Mai 22 14:17 ..
+#-rw-rw-r--  1 user user     0 Mai 22 14:22 myfile.txt
+#-rw-rw-r--  1 user user   192 Mai 22 14:18 spider.txt
+
+# Comando para mover un archivo de un directorio, en este caso lo que hizo fue moverlo al mismo directorio pero cabmiando el nombre:
+/mynewdir$ mv myfile.txt emptyfile.txt
+
+# Comando para copiar un archivo a otro:
+/mynewdir$ cp file/spider.txt file/yetanotherfile.txt
+
+
+/mynewdir$ ls -l
+#Output:
+#total 8
+#-rw-rw-r-- 1 user user   0 Mai 22 14:22 emptyfile.txt
+#-rw-rw-r-- 1 user user 192 Mai 22 14:18 spider.txt
+#-rw-rw-r-- 1 user user 192 Mai 22 14:23 yetanotherfile.txt
+
+# Comando para borrar todos los archivos del directorio actual:
+/mynewdir$ rm *
+/mynewdir$ ls -l
+#total 0
+
+# Comando para devolverse un directorio:
+/mynewdir$ cd ..
+
+# Comando para eliminar un directorio vacio:
+rmdir mynewdir/
+
+# Error por no econtrar el directorio buscado:
+ls mynewdir
+#ls: cannot access 'mynewdir': No such file or directory

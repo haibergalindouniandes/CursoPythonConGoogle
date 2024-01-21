@@ -1,0 +1,134 @@
+# Crear imagen
+docker build -t ubuntu-python -f Dockerfile .
+
+# Lanzar imagen normal
+docker run --name=ubuntu-python -it ubuntu-python
+
+# Lanzar imagen con un volumen
+docker run --name=ubuntu-python -it -v "C:\Users\haiber.galindo\Documents\CursoPythonConGoogle\02_PythonToInteractWithOperationSystems":/app ubuntu-python
+
+# Iniciar contenedor existente
+docker start ubuntu-python
+
+# Acceder al contenedor existente
+docker exec -ti ubuntu-python bash
+
+# Marcar un archivo como ejecutable
+01_hello_world.py
+
+#!/usr/bin/env python3
+print('Hola mundo')
+
+# Marcar un archivo python con el anterior en ejecutable de forma directa
+chmod +x 01_hello_world.py
+
+#Dar todos los permisos
+chmod 777 01_hello_world.py
+
+# Una vez hecho lo anterior se puede ejecutar solo con
+./01_hello_world.py
+
+
+# Si con la configuración anterior no resulta, se puede convertir el archivo .py a unix con la libreria le linux dos2unix
+dos2unix 01_hello_world.py
+
+# Instalacion de entornos virtuales
+python3 -m venv myenv
+
+# Activar entornos virtuales
+# En Windows:
+myenv\Scripts\activate
+
+#En macOS y Linux:
+myenv/bin/activate
+
+# Busqueda de informacion de forma normal. El comando grep hace uso de regex para retornar informacion que haga math con la palabra buscada
+grep docker /app/Module_3/exercises/files/Comandos.txt
+
+# Busqueda de informacion usando grep y que retorna la informacion que coincida sin importar mayusculas o minusculas
+grep docker -i /app/Module_3/exercises/files/Comandos.txt
+
+# Busqueda de informacion usando el comodin . para obtener las siguientes palabras: losa, lisa, lusa, lesa, lasa. Tambien se hace uso de parametro -i para que me traiga todo sin importar mayusculas o minusculas
+grep l.sa -i /app/Module_3/exercises/files/Comandos.txt
+
+# Busqueda de informacion usando el comodin ^ para obtener todas las lineas que inicien con la palabra "Esto"
+grep ^Esto /app/Module_3/exercises/files/Comandos.txt
+
+# Busqueda de informacion usando el comodin $ para obtener todas las lineas que terminen con la palabra "ion"
+grep com$ /app/Module_3/exercises/files/Comandos.txt
+
+# Consultar que variables de entorno se encuentran en nuestro sistema, en LINUX:
+env
+
+# Agegar las variables SHELL y FRUIT se debe crear la variable de ambiente de la siguiente manera (LINUX):
+export FRUIT=Pineapple
+
+# Imprimir por consola una variable de ambiente (LINUX):
+echo $PATH
+
+# Contar el número de líneas, palabras y caracteres en un archivo de texto:
+wc archivo.txt
+
+# Mostrar solo el número de líneas en un archivo:
+wc -l archivo.txt
+
+# Mostrar solo el número de palabras en un archivo:
+wc -w archivo.txt
+
+# Mostrar solo el número de caracteres en un archivo:
+wc -c archivo.txt
+
+# Comando que enumera los procesos que se ejecutan en la terminal actual para el usuario actual
+ps 
+
+# Comando que muestra el entorno para los procesos enumerados
+ps e
+
+# Comando para obtener todos los procesos que estan corriendo y filtrar por nombre o palabra clave:
+ps ax | grep ping
+
+# Comando que envía la señal SIGTERM al proceso identificado por PID:
+kill PID
+
+# Comando &&  para ejecutar secuencialmente comandos:
+# En este ejemplo primero se convierte archivo para que se pueda ejecutar y despues se mueve a una carpeta publica
+chmod +r file.html && mv file.html /var/www/html/index.html
+
+# Comando para copiar archivos:
+cp file1.txt file2.txt file3.txt dir1/
+
+# Comando para extraer campos de un archivo de datos. Dos ejemplos son:
+cut -f1 -d”,” addressbook.csv # Este comando extrae el primer campo de un archivo .csv.
+cut -c1-3,5-7,9-12 phones.txt # Este comando extrae solo los dígitos de una lista de números de teléfono.
+
+# Comando para mover archivos:
+mv file1.txt dir1/file1.txt
+
+# Comando para ordenar contenido de un archivo:
+sort names.txt # Este comando ordena las entradas alfabéticamente.
+sort -r nam # Este comando ordena las entradas en orden alfabético inverso, comenzando con la letra z.
+sort -n numbers.txtes.txt # Este comando trata las entradas como números y luego las ordena numéricamente.
+
+# Comando que hace que un trabajo que estaba detenido o en segundo plano vuelva al primer plano:
+fg
+
+# Comando que hace que un trabajo que se detuvo pase a segundo plano:
+bg
+
+# Comando que enumera los trabajos actualmente en ejecución o detenidos:
+jobs
+
+# Comando que muestra los procesos que actualmente utilizan más tiempo de CPU (presione 'q' para salir):
+top 
+
+# Imprimir por pantalla todos los archivos que tienen una extension especifica:
+echo *.py
+
+# Imprimir por pantalla todos los archivos copmiencen por 0:
+echo 0*
+
+# Imprimir por pantalla todos los archivos:
+echo *
+
+# Imprimir por pantalla todos que tengan en su nombre el numero de caracteres especificado:
+echo ????????????????.py

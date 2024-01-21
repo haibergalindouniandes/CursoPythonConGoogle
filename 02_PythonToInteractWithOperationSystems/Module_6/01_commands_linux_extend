@@ -1,0 +1,24 @@
+En la consola de Linux, los comodines < y > se utilizan para redirigir la entrada y salida estándar, respectivamente. Aquí tienes una explicación más detallada de cada uno:
+
+Operador < (Redirección de entrada estándar):
+El operador < se utiliza para redirigir la entrada estándar (stdin) de un programa desde un archivo o desde otra fuente.
+Sintaxis: comando < archivo
+Ejemplo: cat < archivo.txt - Esto imprimirá el contenido de archivo.txt en la consola usando el comando cat.
+
+Operador > (Redirección de salida estándar):
+El operador > se utiliza para redirigir la salida estándar (stdout) de un programa hacia un archivo o cualquier otro destino.
+Sintaxis: comando > archivo
+Ejemplo: ls > lista_archivos.txt - Esto almacenará la lista de archivos del directorio actual en el archivo lista_archivos.txt.
+
+Operador >> (Redirección de salida estándar con apéndice):
+El operador >> se utiliza para redirigir la salida estándar (stdout) de un programa hacia un archivo, pero agrega el contenido al final del archivo sin sobrescribirlo.
+Sintaxis: comando >> archivo
+Ejemplo: echo "nueva línea" >> archivo.txt - Esto agregará "nueva línea" al final de archivo.txt.
+
+Operador 2> (Redirección de salida estándar error):
+La sintaxis es idéntica a la del operador >, pero redirije cualquier error a un archivo
+Ejemplo: ./mi_programa > salida.txt 2> errores.txt
+
+Operador | (Conectar):
+El operador | conecta la salida del comando1 a la entrada del comando2
+Ejemplo: cat files/haiku.txt | ./06_pipes_and_redirection.py 

@@ -1,0 +1,28 @@
+# Este operador | se utiliza para conectar la salida de un comando con la entrada de otro, 
+# permitiendo la ejecución de una serie de comandos de forma secuencial. 
+# Esto es conocido como "tubería" porque crea un flujo de datos desde el primer comando hasta el último.
+
+# En este ejemplo conectaremos la salida del comando ls -l como entrada del comando less, que permitira visualizar todos los elementos del directorio
+# de una forma más practica, que incluye paginación.
+
+# Ejecutar por la consola:
+ls -l | less
+
+#(... A list of files appears...)
+
+
+# En este ejemplo conectaremos varias entrada y salidas de diferentes comandos haciendo uso de |
+
+# Ejecutar por la consola:
+cat files/spider.txt | tr ' ' '\n' | sort | uniq -c | sort -nr | head
+
+# 7 the
+# 3 up
+# 3 spider
+# 3 and
+# 2 rain
+# 2 itsy
+# 2 climbed
+# 2 came
+# 2 bitsy
+# 1 waterspout.

@@ -1,0 +1,4183 @@
+Usuario generado para poder subir un proyecto nodeJs a Elastic Beanstalk
+
+User:
+deploy-eb
+
+Access key deploy-eb user:
+AKIA3PEGFP6FED2G4YVJ
+
+Secret access key: 
+CYezfu5ycWw+Zqc34l8im1lFllqkGvYmA3v7RrIN
+
+------------------------------------------------------
+Cuenta Nueva de AWS
+
+Fecha de creación: 2023-10-09
+Email: wagig16102@ksyhtc.com
+Usuario: wagig16102
+Contraseña: Zl@ifer619
+
+------------------------------------------------------
+
+Dominio para las practicas de AWS:
+
+Proveedor: GoDaddy
+Periodo: 1 año
+Vence: 12 de jul de 2024
+Nombre: cloudformationhhgs.com
+IP publica: 34.102.136.180
+
+
+------------------------------------------------------
+Descargar cliente AWS
+
+https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html
+
+-------------------------------------------------------
+Crear perfil aws en el proyecto de NodeJs a subir
+
+
+Despues de haber instalado el cliente de AWS
+
+Ejecutar el comando:
+aws configure --profile deploy-eb
+
+Y pegar las credenciales:
+
+Access key deploy-eb user:
+AKIA3PEGFP6FED2G4YVJ
+
+Secret access key: 
+CYezfu5ycWw+Zqc34l8im1lFllqkGvYmA3v7RrIN
+
+-------------------------------------------------------
+Descargar e instalar cliente ElasticBeanStalk
+
+https://docs.aws.amazon.com/es_es/elasticbeanstalk/latest/dg/eb-cli3-install.html
+
+Pagina directa de isntalacion
+
+https://github.com/aws/aws-elastic-beanstalk-cli-setup
+
+-------------------------------------------------------
+Crear perfil eb en el proyecto de NodeJs a subir
+
+Despues de haber instalado el cliente de EB, pip, virtualenv de python
+
+Ejecutar el comando:
+eb init --profile deploy-eb
+
+
+
+
+------------------------------------------------------
+Conectarse a la instancia de base de datos
+
+ psql -h platzidb.cazx2kwlaiyk.us-east-1.rds.amazonaws.com -U platzidb -d platzidb
+ 
+ Hacer el dumb
+ 
+ psql -h platzidb.cazx2kwlaiyk.us-east-1.rds.amazonaws.com -U platzidb -d platzidb < sample-uk-zipcodes.sql
+ 
+ 
+ Route 53
+ 
+smartawscloudapps.com
+
+
+-------------------------------------------------
+Base de datos PostGresql
+-------------------------------------------------
+Base de datos:
+
+museumdb
+
+
+------------------------------------------------
+Instalar nodemon en desarrollo
+npm i nodemon eslint eslint-config-prettier eslint-plugin-prettier prettier -D
+
+public/stylesheets/style.css
+
+
+Project storage in memory
+
+API de museos implementado en NodeJS, que permite almacenar la información en memoria. 
+Este proyecto se implemento para ser desplegado en Amazon Beanstalk a traves de CodePipeline de AWS.
+
+-------------------------------------------
+Base de datos MUSEUMS Postgresql
+-------------------------------------------
+
+-- Database: museums
+
+-- DROP DATABASE IF EXISTS museums;
+
+CREATE DATABASE museums
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+COMMENT ON DATABASE museums
+    IS 'Database museums';
+	
+	
+-------------------------------------------
+
+-- Table: public.museum
+
+-- DROP TABLE IF EXISTS public.museum;
+
+CREATE TABLE IF NOT EXISTS public.museum
+(
+    id integer NOT NULL DEFAULT nextval('museum_id_seq'::regclass),
+    name character varying COLLATE pg_catalog."default" NOT NULL,
+    description character varying COLLATE pg_catalog."default" NOT NULL,
+    address character varying COLLATE pg_catalog."default" NOT NULL,
+    city character varying COLLATE pg_catalog."default" NOT NULL,
+    image character varying COLLATE pg_catalog."default" NOT NULL,
+    bloked boolean NOT NULL,
+    CONSTRAINT museum_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.museum
+    OWNER to postgres;
+
+COMMENT ON TABLE public.museum
+    IS 'Table museum';
+	
+-----------------
+Creado con nuestro orm sequelize	
+
+-- Table: public.museum
+
+-- DROP TABLE IF EXISTS public.museum;
+
+CREATE TABLE IF NOT EXISTS public.museum
+(
+    id integer NOT NULL DEFAULT nextval('museum_id_seq'::regclass),
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    address character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    city character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    image character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    bloked boolean NOT NULL,
+    CONSTRAINT museum_pkey PRIMARY KEY (id),
+    CONSTRAINT museum_name_key UNIQUE (name)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.museum
+    OWNER to postgres;	
+-------------------------------------------
+
+Password root user root@user.com
+1af67ff36aa35b25febfb8bea4d6b164	
+
+
+
+git commit -m "Implement backend Museums NodeJS, with ORM sequelize to manage Postgres"
+
+
+API de museos implementado en NodeJS, express, helmet, jsonwebtoken, jade, morgan, md5, dotenv, joi y ORM sequelizeque.
+Este proyecto se implemento para ser desplegado en Amazon Beanstalk a traves de CodePipeline de AWS y usando RDS Postgres.
+
+----------------------------------------------
+
+Kill port in NodeJS
+npx kill-port 3000
+
+----------------------------------------------
+Variables de entorno necesarias para la app app-museums-aws-eb en nustra instancia EC2
+----------------------------------------------
+Denifinimos las variables en el EC2 de AWS - Ubuntu
+
+Abrimos el archivo .bashrc con el siguiente comando: 
+nano /home/ubuntu/.bashrc
+
+--------
+Pegamos lo siguiente al final del archivo: 
+
+# User specific aliases and functions
+export PORT=3000
+export PRIVATE_KEY=16b8318a-864b-11ed-a1eb-0242ac120002
+export DEFAULT_USER=root@user.com
+export DEFAULT_PASSWORD=2fb699f4deb3724f6e415ec79ead6b8c
+export EXPIRE_TIME_TOKEN=6000
+export DB_LOGGING=true
+export DB_DIALECT=postgres
+export DB_HOST=museums.cazx2kwlaiyk.us-east-1.rds.amazonaws.com
+export DB_PORT=5432
+export DB_USER=postgres
+export DB_PASSWORD=welcome1
+export DB_NAME=museums
+export DB_CONNECTIONS=10
+export DB_ORDER_QUERIES=ASC
+
+-------
+Recargamos el archivo .bashrc con el siguiente comando: 
+source /home/ubuntu/.bashrc
+
+
+
+----------
+
+
+investments
+portfolio_type
+last_purchase_value
+
+last_sale_value
+
+incoming_actions
+outgoing_actions
+
+
+ng new money-control-front
+
+ng build
+
+https://www.userbenchmark.com/System/HP-All-in-One-24-dd0xxx/189909
+
+src="https://globalcampus.neoris.net/pluginfile.php/54191/mod_resource/content/1/2. Curso AWS - CDK - for dummies.mp4"
+
+
+-------------------
+
+Activar venv en Python
+source venv/Scripts/activate
+
+Instalar dependencias desde archivo requirements
+pip install -r requirements.txt
+
+
+development team members
+
+
+http://localhost:4200/persona
+
+
+--------------------------------------------------------
+2023-02-03
+
+
+Disponibildad habla de:
+	-> Deteccion de fallas -> Esta asociada tambien a la disponibilidad de software
+	-> Enmascaramiento de fallas -> Esta asociada tambien a la disponibilidad de software
+	-> Recuperación de fallas -> Esta asociada tambien a la disponibilidad de hardware
+	-> Prevencion de fallass -> Esto es demasiado costo
+		-> Uso de inteligencia artificial
+		-> Uso de modelos analiticos predictivos
+
+
+El costo de la disponibilidad	
+	-> Tipicamente la disponibilidad tiene un costo:
+		-> El costo de disponibilidad vs el costo de la indisponibilidad
+		-> A mayor disponibilidad pago mas, al no tener una disponbilidad tambien pago
+		-> Se debe tener muy en cuenta las restricciones
+		-> Por lo anterior se debe llegar a un punto en donde diga, hata cierto grado yo garantizo la disponibilidad de algunas cosas pero de otras no puedo
+
+Vision de usuario final de la disponibilidad:
+	-> Toda peticion que yo haga quiero que me la responda correctamente el 100% de las veces
+
+
+Vision de usuario de operación de la disponibilidad:
+	-> Nos va a decir las fallas va a ocurrir y yo quiero detectar o enmascararlas o prevenirlas o recuperarme de ellas 
+	-> Que implica para mi por ejemplo detectar fallas
+	-> Que medida de respuesta voy a dar para detectar fallas 
+	-> Cuantas fallas voy a detectar, por ejemplo el 100% de las fallas que ocurran
+
+
+
+Disponibilidad del software
+	-> Que se entiendo como falla de un componente de software
+		-> Cuando los componentes no funcionan, es decir dejaron de responder por que se callo
+		
+		-> Cuando el componente responde pero de forma incorrecta, por ejemplo que la respuesta de un API es un json (contenido), pero me esta llegando con campos vacios, malformado o incompleto
+		
+		-> Cuando el componente contesta pero de forma degarada (este termino hace referencia no solo al tiempo de respuesta, sino tambien al consumo de memoria y procesamiento, hilos o procesos que esta dejando abiertos). Es decir lo que ocurre en el componente de un estado inicial (T0) a un estado siguiente (Tn) y que resulta anormal. Esta falla es muy costosa
+	
+	
+Disponibildad del hardware
+	-> Se mide con la forma de recuperacion de fallas
+	-> La formula para calcular la disponibilidad del hardware se mide:
+		-> TiempoMedioFalla / (TiempoMedioRecuperacion + TiempoMedioFalla)
+	-> La disponibilidad de la infraestructura se mide por lo general con lo 9, como 99,99%, 99,995%
+
+
+-> Se puede hacer ASRs condicionados a por ejemplo el ambiente, en el cual si cambia el ambiente cambia la medida de la respuesta, ejemplo:
+	-> En ambiente de operacion basica, que son menos de 1000 transacciones el componente xxxx debe responder en tanto tiempo
+	-> En ambiente de operacion media, que son entre 1000 y 10000 transacciones el componente xxxx debe responder en tanto tiempo
+	-> En ambiente de operacion maxima que son mas de 10000 el componente xxxx debe responder en tanto tiempo
+
+
+-> Deteccion de fallas que se podria utilizar para el trabajo
+	-> Del componente de compras a fabricantes y proveedores, yo me comprometo a detectar el 100% de fallas
+	-> Del componente de despachos, yo me comprometo a detectar el 98% de fallas
+	-> 	
+	
+
+Necesisdades del product owner
+	
+ -> Administrador inicie sesión en la aplicación y que pueda ver el listado de los entrenadores
+	-> Se debe crear el usuario administrador previamente (hiria por base de datos)
+	-> El listado de entrenadores debe conservar la misma estructura que tiene la aplicación, es decir el listado de entrenadores una vez el administrador se loguee de estar posicionando a mano izquierda
+	
+ -> El entrenador debe poder crear las rutinas
+	-> Crear la rutina con el nombre y la descripción
+	-> Asignar los ejercicios a la rutina
+		
+-> El cliente pueda visualizar su reporte de Indice de masa corporal y entrenamientos
+
+
+
+hacemos una comparativa de las historias 
+
+cuando ya tengamos organizado el backlog le decimos a Adriana
+
+
+
+-> para la semana que viene se debe hacer la puntuacion 
+
+
+
+
+MISW-DA-Inception-CalculoVelocidad
+
+
+el 99% de las veces el inventario
+-> Informacion correcta
+-> El total de la existencia de un producto llegue el 99% llegue corrcto
+
+
+98 % de certeza en el reporte de productos.
+
+
+
+flask run --host=0.0.0.0 --port=80
+
+flask run --host=0.0.0.0 --port=5000
+
+
+flask run --host=0.0.0.0 --port=8080
+
+ETB
+-> Fibra optica 100%
+-> 300 megas
+-> linea fija como un plus
+-> 79.900
+
+
+-> 400 megas
+-> Tiene una IP
+-> Soporte tenico
+
+
+-> 400 megas
+-> No tiene linea
+-> Tiene una IP fija
+-> 96.900
+-> Directv Go se puede adicional si se quiere
+	-> 42.900
+	
+
+-> Plan de 200 mb
+-> 3 decodificadores
+-> 112 canales
+-> 139.900
+
+Asesora ETB
+Meliza Salazar
+
+
+
+pm2 start app.py --name flask-app --interpreter=python
+
+Contrato ETB
+6013777777 opc 2
+
+------------------------------
+Ejecutar comando docker para crear imagen:
+docker build . -t enforma-flask-app
+docker build . -t acl-app
+
+
+Implementar krakend
+docker build . -t krakend
+docker run --name=api-gateway-krakend -p=8080:8080 krakend
+docker run --name=api-acl-redis -p=5000:5000 acl-app
+
+
+Ejecutar comando docker para correr imagen:
+
+docker run --name={nombre-aplicacion} -p={puerto-a-exponer-local}:{puerto-de-la-app} {nombre-imagen-docker}
+
+docker run --name=flask-container-01 -p=5000:5000 enforma-flask-app
+docker run --name=flask-container-02 -p=5001:5000 enforma-flask-app
+docker run --name=flask-container-03 -p=5002:5000 enforma-flask-app
+
+
+
+docker build . -t users-mcs-docker
+docker run --name=users-mcs-docker -p=5000:5000 users-mcs-docker
+
+
+Iniciar contenedor existente en docker
+
+docker start flask-container-01
+docker start flask-container-02
+docker start flask-container-03
+docker start nginx-balancer
+
+docker exec -ti flask-container-02 sh
+
+Ejecutar comando para ejecutar contendor existente
+
+docker exec -ti flask-container-01 bash
+docker exec -ti flask-container-02 bash
+docker exec -ti flask-container-03 bash
+docker exec -ti nginx-balancer bash
+
+Comando para inspeccionar un contender
+
+docker inspect {nombre-contenedor}
+docker inspect flask-container-01
+
+
+docker exec -ti 7e1fcef6a731 sh
+
+ventas
+docker exec -ti b39919ef12bce0f3a85a003a32acd34ea275368f62718f9ac8ea9a2038d73857 bash
+docker inspect b39919ef12bce0f3a85a003a32acd34ea275368f62718f9ac8ea9a2038d73857
+
+registroVentas
+docker exec -ti 3c563875ee43e813f445be656bd9cc3b8e4e8c24e8fa164988d975749f1f5dbd bash
+docker inspect 44d6c5e5cb1ece125de9654f652ebd3c55b3c5d0a5ae587283cdb7106294e65c
+
+docker cp 8c274e15129511c40ecded9b4ec54bcf0e86854091d11466e62f76cce5532556:/app "C:\Users\haiber.galindo\Documents\Herramientas"
+
+
+docker cp 5f39164c2dd55e6a9967f3fd6a8d3cb237514f57373ed8f3d6e20e4a4ae92457:/app "C:\MISO\Ciclo5\AplicacionesNativaEnLaNube\Semana7\Actividades\true-native\app"
+
+
+docker cp 75740df6fad67579c0e9f66e79de317c7caf1942a0f1f0104e89dcdbaa32ded5:/app "C:\MISO\Ciclo5\AplicacionesNativaEnLaNube\Semana8\Actividades\s202314-proyecto-grupo8_repo_haiber\truenative"
+
+redis:6379
+
+NGINX
+docker exec -ti 55e3cb8e40b227726912b850c9d1c6fec4c0730da43d7e8a62bbcbf7f1e539a3 bash
+docker inspect d890c2f3fdc6d08f2ecdee5ddba6e6050229b8f35024d2420079be0fde551940
+
+
+
+docker cp c97b8f271d8edef74195fffc0678e8e748ba930df15302ced58fda88552433dd:/var/log/nginx/ventas_access.log "C:\MISO\Ciclo3\ArquitecturasAgilesDeSoftware\Experimentos\Experimento_01\MISW4202-11-Equipo1\nginx-balancer"
+
+
+
+docker cp d890c2f3fdc6d08f2ecdee5ddba6e6050229b8f35024d2420079be0fde551940:/var/log/nginx "C:\Users\haiber.galindo\Documents\Herramientas"
+
+-------
+Redis
+docker exec -ti 46b8f644a79f593b41ca61f4a7bd2f9b5fbc2a48255bad9d2d08d8f82c9b8317 bash
+docker exec -it 9e6b08f7703bc86e3bf59440652a164e8f4d201097012eead816f682cc2ef158 sh
+
+
+Eliminar contenedores y sus volumenes:
+docker rm -vf $(docker ps -aq)
+
+Detener contenedores
+docker stop $(docker ps -aq)
+
+
+Eliminar todas las imagenes:
+docker rmi -f $(docker images -aq) 
+
+
+Eliminar todos los volumenes:
+docker volume prune
+
+
+Iniciar contenedor:
+docker start my_container
+
+
+Ver contenedores arriba:
+docker ps
+
+
+Ver logs del contenedor de forma sostenida:
+docker logs <container_id> -f
+
+Abrir la terminal de un contenedor:
+docker exec -it <mycontainer> bash
+
+Construir image:
+docker build . -t celery_worker
+
+
+Correr image:
+docker run -dp 5000:5000 celery_worker
+
+
+--------------------------------
+Crear una imagen sobre otra imagen
+
+docker commit 55e3cb8e40b227726912b850c9d1c6fec4c0730da43d7e8a62bbcbf7f1e539a3 cpp_nginx
+
+
+sha256:b785057257b8a3a19878913dbaf88af7aac3c3fe17a6a52362e1bb020f25f97e
+
+Ver todas las imagenes locales de docker
+docker images -a
+
+cpp_nginx
+
+
+Ruta Windows 10 donde se alojan las imagenes
+
+\\wsl.localhost\docker-desktop-data\data\docker\containers
+
+C:\ProgramData\DockerDesktop
+
+
+
+docker ps -a 
+
+Ingresar a redis
+
+redis-cli KEYS *
+
+redis-cli 
+
+SELECT 0
+
+KEYS *
+
+
+Esto es usando Celery
+
+para ver cuantos mensajes tiene la cola de celery
+LLEN celery
+
+para ver el mensaje 0
+LINDEX celery 0
+
+
+redis-cli monitor
+
+
+Comando para ejecutar worker
+
+celery -A app.celery worker --pool=solo -l info
+
+--------------------------------------------------------------
+Descargar docker nginx-prometheus-exporter a imagen
+
+docker pull nginx/nginx-prometheus-exporter:latest
+
+
+Instalar imagen de nginx en docker 
+
+docker run -d --name nginx-balancer -p 8080:8080 nginx:latest
+
+docker run -it -d nginx-balancer
+
+
+Instalar imagen de nginx en docker prometheus-exporter
+
+docker run -d --name nginx-prometheus-exporter -p 8080:8080 nginx:latest
+
+docker run -it -d nginx-prometheus-exporter -p 8080:8080
+
+
+
+Instalar dependencias en el contenedor
+6. docker exec
+
+Usage: docker exec -it {nombre o id del contenedor} bash
+docker exec -it 857c024a8798b0e579d243306c8374d9744993471a91b949e9ffde812bf4e440 bash
+
+docker exec -it nginx-balancer bash
+
+
+Instalacion de nano en contendor de nginx
+apt-get update
+apt-get install vim nano -y
+apt-get install telnet -y
+apt-get install tail
+
+apt update && apt upgrade
+apt install curl
+
+Comando para visualizar en tiempo real los logs
+tail -f /var/log/nginx/order.log
+tail -f /var/log/nginx/order-registry.log
+
+
+Instalacion de nano en contendor de phython
+apk update
+apk add nano
+
+
+Para instalar telnet
+apk add busybox-extras
+
+
+Abrir el archivo de configuracion de nginx para configurar el balanceo
+
+nano /etc/nginx/conf.d/default.conf
+
+
+Definimos 
+
+### Nginx Load Balancer Example
+
+upstream backend_balancer {
+  # The upstream elements lists all
+  # the backend servers that take part in 
+  # the Nginx load balancer example
+
+  server 172.17.0.3:5000;
+  server 172.17.0.4:5000;
+  server 172.17.0.5:5000;
+
+}
+### Nginx load balancer example runs on port 80
+server {
+  listen 8080 default_server;
+  listen [::]:8080 default_server;
+  root /var/www/html;
+  server_name _;
+
+  location / {
+    # try_files $uri $uri/ =404;
+	proxy_pass http://backend_balancer;
+  }
+
+  # The proxy_pass setting will also make the
+  # Nginx load balancer a reverse proxy
+  # location /sample {
+  #  proxy_pass http://backend_balancer/sample;
+  # }
+
+} # End of Nginx load balancer and reverse proxy config file
+
+
+Definir configuracion test nginx
+nginx -t
+
+Recargar servidor nginx
+nginx -s reload
+
+
+service httpd restart
+------------------------------
+Ejecutar docker compose para ejecutar el compose y que quede corriendo en consola:
+docker compose up
+
+Ejecutar docker compose para ejecutar el compose y que quede corriendo en nohup:
+docker-compose up -d
+
+---------------------------------------------------
+
+Pasar un archivo local a un contenedor docker
+
+docker cp RUTA_LOCAL NOMBRE_CONTENEDOR:RUTA_DEL_CONTENEDOR
+docker cp ./Libs_To_Nginx nginx-balancer:/home
+
+Del contenedor al local
+docker cp NOMBRE_CONTENEDOR:RUTA_DEL_CONTENEDOR RUTA_LOCAL
+docker cp a7166a47d428ea5e3168dd94e8577485023c294e0be7c68eda728786add24b2e:/backend "C:\Users\haiber.galindo\Documents\Herramientas"
+---------------------------------------------------
+
+Consultar lista de packetes instalados
+apt list --installed
+
+----------------------------------------------------------------------
+Procesos de desarrollo agil 
+
+
+Primera entrega
+
+
+
+
+-> Las HU del tope del PBL detalladas en Jira. El detalle incluye descripción, criterios de aceptación y mockups.
+
+Segunda entrega
+
+-> Documento de arquitectura en la wiki del equipo.
+
+
+Tercera entrega
+
+-> Historias de usuario del PBL se encuentran estimadas en Jira.
+-> Formato de velocidad diligenciado en la wiki del equipo.
+-> Sprint 1 se ha creado en Jira y contiene las historias de usuario seleccionadas y aprobadas por el dueño de producto para el sprint.
+
+
+Cuarta entrega
+
+Formato de identificación de riesgos completamente diligenciado y cargado en la wiki del equipo.
+
+
+Quinto trabajo
+
+Formato de flujo de trabajo en la wiki del equipo.
+
+
+
+-> 1 enmascaramiento
+
+-> 3 enmascaramiento
+
+-> 10 enmascaramiento
+
+-> 11 recuperacion de errores
+
+-> 12 recuperacion de errores
+
+
+compra 
+invetorio -> normales
+
+
+--------------------------------------
+
+Levantar aplicacion en AWS con gunicorn
+
+apt install gunicorn -y
+
+
+cd projects/python-projects/python-app-aws/
+
+gunicorn -b 0.0.0.0:5000 app:app
+
+gunicorn --bind 0.0.0.0:5000 wsgi:app
+
+
+ps axjf (que mostrará un árbol jerárquico con la ruta del programa al que pertenece el proceso)
+
+-------------------------------------------
+Configuracion del servicio de la aplicacion en linux
+
+
+python3 -m venv venv
+
+Ejecutamos para crear el archivo enforma.service
+
+sudo nano /etc/systemd/system/enforma.service
+
+Despues pegamos:
+
+[Unit]
+Description=Gunicorn instance for En Forma app
+After=network.target
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/projects/python-projects/python-app-aws
+# ExecStart=/home/projects/python-projects/python-app-aws/venv/bin/gunicorn -b localhost:5000 app:app
+# ExecStart=flask run --host=0.0.0.0 --port=80
+ExecStart=flask run
+Restart=always
+[Install]
+WantedBy=multi-user.target
+
+
+Despues reiniciamos el demonio:
+systemctl daemon-reload
+
+Despues iniciamos enforma:
+systemctl start enforma
+
+Habilitamos el servicio enforma:
+systemctl enable enforma
+
+systemctl restart enforma
+
+systemctl stop enforma
+
+Enviamos un curl para validar si el servicio esta arriba: 
+curl localhost:5000/login
+
+Instalamos Nginx:
+apt-get install nginx -y
+
+Inicializamos nginx:
+systemctl start nginx
+
+Habilitamos nginx:
+systemctl enable nginx
+
+Editamos la configuració de Nginx:
+nano /etc/nginx/sites-available/default
+
+Agregamos las lineas:
+
+upstream enformaapp {
+    server 127.0.0.1:5000;
+}
+
+
+location / {
+    proxy_pass http://enformaapp;
+}
+
+
+Despues reiniciamos el servicio de Nginx:
+systemctl restart nginx
+
+systemctl stop nginx
+
+-------------------------------------------
+
+docker exec -ti 863985fb05ea0fa7a8ae65818cf087a1be2856f8196de395a38c693fe085c9af bash
+
+192.168.31.38
+
+Ejecutar todos los test de la carpeta test
+python -m unittest discover -s tests
+python -m unittest discover -s tests -p "test_persona.py"
+
+
+Ejecutar los test de una sola clase
+python -m unittest tests/test_persona.py
+
+python -m unittest tests/test_entrenamiento.py
+python -m unittest tests/test_entrenadores.py
+
+-----------------------------------------------
+
+Software Architecture in Practica. Third Edition. Len Bass, Paul Clements, Rick Kazman. SEI Series in Software Engineering. Adisson-Wesley.2013. ISBN: 0-32-81573-4-Capitulo:5
+
+
+Deteccion de fallas
+
+-> Deteccion de errores
+-> Enmascaramiento de fallas
+
+
+Preparacion y reparacion 
+
+-> Reintentos
+-> Reconfiguracion
+-> Manejo de errores
+
+-> Sombra
+-> Reinicio escalonado
+
+-> Primer bloque
+
+-> Deteccion de excepciones
+-> Manejo de excepciones
+-> Reconfiguracion
+-> Reintentos
+	-> Para Enmascaramiento de Errores
+
+Segundo bloque
+-> Retiro del servicio
+-> Reinicio escalonado
+
+Para la recuperacion de las fallas en el sitema
+
+
+commit to revert 
+
+b84ef2774ab41b5467ef084b73f8a1c90fba8c00
+
+
+git reset --hard b84ef2774ab41b5467ef084b73f8a1c90fba8c00
+
+
+git reset --hard 289e69de425c855e6103db7be9ee39f6c3921ab6
+
+
+git reset --merge b84ef27
+
+
+git revert b84ef27 -m 1
+
+
+--------------------------------------------------
+
+
+31680000
+
+21%
+
+Con certificado Sena
+25%
+
+2.521.000
+
+1.899.200
+
+
+cesantias
+credito
+debito
+efectivo
+
+
+
+cedula
+eps -> Fosiga
+diploma o acta de bachiller
+icfes
+
+
+
+TecnicoEnPrensaDigital
+
+
+1020763646
+
+
+Bug vista personas 7
+
+
+
+(Rojo) Listado de rutinas, detalle de rutina y botones
+
+
+--------------------------------------------
+HISTORIAS DE USUARIO A REFINAR
+--------------------------------------------
+ER03 - Asignar rutina a cliente
+
+
+Rutinas
+
+-> Reglas de negocio
+	-> Debe tener mayor de 3 ejercicios asignaos para que aparezca en la lista de rutinas a asignar 
+	-> Los campos fechas, repeticiones y duracion deben ser obligatorias
+	-> Si el se presenta un error debe ser visible y entendible para el usuario
+
+-------------------------------------------
+
+EC01 - Agregar campos de "Usuario" y "Contraseña" a la función de crear Cliente 
+
+Ajustar el formulario de creacion de personas con una sesccion en la que debamos especificar el ususario y la contraseña
+
+-> A Adriana le gustaria que la informacion a crear fuera por secciones
+
+-> Informacion personal
+	-> Tambien va la fecha de ingreso
+	
+-> Informacion fisica
+
+-> Informacion de cuenta
+
+
+Criterios de aceptación
+
+-> Los campos de usuario y contraseña son obligatorios
+-> La contraseña ingresada sea igual que la de confirmar contraseña
+-> Se debe mostrar la contraseña enmascarada
+
+-------------------------------------------
+
+CC01 - Iniciar sesión del cliente
+
+
+Criterios de aceptación
+
+-> Se debe mostrar un mensaje como Bienvido Adriana y salir
+
+-------------------------------------------
+
+CI01 - Consultar entrenamientos realizados por el cliente
+
+
+-> Para la primera parte no incluir series, solo debe ir repeticiones y duracion
+
+-> Debe aparecer un ojito con la informacion personal, talla, brazo, pecho, cintura, edad
+	-> Bloque de informacion general
+	-> Bloque de medidas
+
+	-> Listado de ejericios
+	
+	-> Listado de rutinas
+		-> Nombre rutina	
+		-> Fecha 
+		-> Duracion total de la rutina, es la suma de la duracion de cada uno de los ejercicios
+		-> Cantidad de ejercicios que tiene la rutina
+		
+	Opcional
+		-> Boton ojito para poder ver los ejercicios que tiene la rutina
+
+----------------------------------------
+
+CI05 - Generar reporte de entrenamientos (IMC)
+
+
+-> Al lado del ojito debe haber un boton Ver reporte, y al darle click debe mostrar la informacion del reporte pero dentro de la misma ventana
+
+
+-> Rutina
+-> Se debe agregar el calculo de las calorias para la rutina
+
+-> En resultados
+	-> Tiene que haber un campo tipo
+	-> Se mezcla la rutina -> Se muestra un solo valor, que corresponde a la sumatorias de los ejericios de la rutina
+	-> Se mezcla el ejercicio 
+	-> Se calcula el total de calorias que gaste
+	
+
+----------------------------------------
+
+AE07 - Ver detalle de entrenador
+
+-> Inicio sesion como administrador 
+-> Ver el listado de entranadores
+	-> Click en el ojito	
+		-> Mostrar nombre
+		-> Mostrar constraseña -> Validar si si se puede sino no va
+
+
+-------------------
+
+cloud-services-aws-miso
+
+
+Correr flask puerto 5000
+flask run --host=0.0.0.0 --port=5000
+
+flask run --host=0.0.0.0 --port=80
+
+flask run --host=localhost --port=5000 
+
+
+Install WSGI
+pip install uwsgi
+
+
+uwsgi --http 0.0.0.0:5000 --master -p 4 -w app:app
+
+
+compilar como produccion Angular
+ng build --configuration production
+
+
+administrador
+@dministrador2023
+
+
+-> clientes finales
+	-> Se enfoca a la parte funcional, lo que se hizo no le interesa el backend
+	-> En la entrega ademas de las urls, entregar el usuario administrador
+	
+
+-> Buenas calificaciones, buena entrega
+
+-> 
+
+Contraseña Admin Jenkins
+6da8c89d4f4745c58a3b61ce289cc808
+
+
+Faltan validaciones de contraseña en el registro de entrenadores
+-> 3 puntos
+
+
+El sistema permite la creación de rutinas con el mismo nombre
+-> 3
+
+
+No recargar página al agregar ejercicio a una rutina
+-> 3
+
+
+
+
+---------------------------
+Autenticacion
+
+Tacticas 
+
+Detectar Ataques
+	-> Detectar intrusos
+		-> Suplantación o Spoofing. Podria ser un perfil que este tratando de realizar procesos que no sean propios del perfil. Ejemplo un conductor este tratando de realizar la creación de una orden de ventana
+		
+	-> Detectar denegación de servicios
+		->  
+		
+	-> Verificar la integridad de los mensajes recibidos
+		-> Adulteración de informacion o tampering. Por ejemplo envio de mensaje que antes de ser enviados se les saca el checksums y posteriormente cuando se reciba se le saca tambien y se compara
+
+	-> Detectar retardos en los mensajes
+		-> Adulteración de informacion o tampering. Por ejemplo un externo intercepte la solicitud de una orden de venta, este confirma al cliente que el proceso se realizo correctamente, y luego este modifica y envia la solicitud adulterada		
+		
+
+Resistir Ataques
+	-> Identificar actores
+		-> Implica validar la identidad de los actores del sistema en cada punto de ataque. El modelo STRIDE nos ayuda para este proceso.
+		
+	-> Autenticacion
+		-> Se puede autenticar un usuario mediante mecanismos base como palabras de acceso, o como certificados SSL o dispositivos como tokens de seguridad conectados a la maquina donde se hace el ingreso. Es importante que no solo los usuarios se autentiquen sino tambien otras aplicaciones que consuman algun servicio
+	
+	-> Autorizacion
+		-> Se debe garantizar que el usuario autenticado solo pueda realizar los procesos autorizados. Estaria relacionado a validar el perfil del usuario y lo que puede realizar. Esto permite controlar ataques de elevacion de privilegios, exposicion de información y repudio. Esto aplica tanto para una persona como un servicio que consume otro servicio
+		
+	-> Limitación de acceso a los recursos
+		-> Solo algunos usuarios o aplicaciones estan autorizadas para tener accesos a algunos recursos		
+		
+
+	-> Separación de entidades
+		-> Separar los espacios de ejecucion de los diferentes microservicios. Esta separacion de entidades busca evitar la propagacion de un ataque en caso de que una de las partes se vea comprometida. Esto esta muy asociado a compartimentalizacion es el uso de contenedores
+		
+
+Reaccionar a los Ataques
+	-> Revocar el acceso
+		-> Consiste en que en caso de identificar un ataque se debe buscar revocar el acceso al actor sospechoso
+		
+	-> Bloquear computadores
+		-> Consiste en bloquear o aislar los recursos comprometidos para mitigar los daños. Esto incluy bloqueo de computadores, bases de datos o microservicios de forma que se evite la propagacion del ataque
+		
+	-> Informar a los actores
+		-> Si se detectan posibles ataques de seguridad	se debe notificar a los encargados sobre la ocurrencia de este, para que se encarguen de tomar las medidas adecuadas
+		
+
+Recuperar de los Ataques
+	-> Restauracion de servicios
+		-> Consiste en reintegrar los servicios afectados por un ataque siempre y cuando estos ya hayan sido analizados y solventadas las causas que causaron su afectacion
+		
+	-> Manejo de logs de eventos
+		-> Se debe registrar los eventos para describir el estado actual del sistema. Estos registro pueden ser utilices posteriormente para entender y replicar la falla ocurrida y solucionarla
+		
+
+-----------
+IMPORTANTE
+
+Siguiente una arquitectura de microservicios, dado que cada uno representa un punto de acceso se debe para cada uno implementar la Autenticacion, Autorizacion e identificar alteracion de información
+-----------
+
+Autorizacion
+
+Tacticas 		
+
+-> Una tectica para reducir la complejidad en el manejo de la suplantacion y acceso no identificado es concentrar en un solo punto esta labor
+
+-> Como primera medida se propone una superficie de ataque tan grande, para lo cual podemos hacer uso de un API Gateway
+
+-> El API Gateway nos ayuda, pero nos toca complementar manejo de acceso y control de identidad de los consumidores
+
+-> Identificacion basada en certificados
+	-> Lo que se busca con esta tactica es identificar que quien nos consume es quien dice ser. Para esto se puede hacer uso de los Certificados SSL y esto aplica para consumidores fuera del API Gateway como consumidores internos o dentro del API Gateway. Un ejemplo es que atraves de certificados SSL un microservicio se comunique con otro
+	
+	-> En este sentido necesitamos de un tercero de confianza que valide la identifidad tanto del consumidor de un servicio como la identidad del servicio que es consumido
+	
+	-> Este tercero de confianza hace las veces de entidad certificadora, puede ser externo o interna a la organizacion
+	
+	
+-> Control de acceso basada en tokens de seguridad
+	-> 	Se debe garantizar el nivel de acceso autorizado tanto para clientes consumidores como para los servicios
+	
+	-> La forma de garantizar el nivel de acceso entre un cliente y un servicio se basa en el uso de un token emitido y validado por un autorizador: 
+		-> JWT: Esta compuesto por
+			-> Encabezado
+			-> Contenido
+			-> Firma
+			
+		-> Oauth 2.0: Este se puede usar para cifrar el JWT con para porteger la confidencialidad. Esta compuesto por:
+			-> Encabezado JOSE
+			-> Llave JWE
+			-> Vector de inicializacion
+			-> Contenido cifrado
+			-> Firma
+			
+
+-------------------------
+
+Tacticas de seguridad en microservicios que utilizan plataformas de mensajeria		
+
+Tacticas
+
+-> 	Certificados
+	-> Se pueden utilziar certificados para todos los microservicios y para la plataforma de mensajeria
+	
+	-> Los certificados permiten que los microservicios puedan confiar en la plataforma de mensajeria y a su vez la plataforma pueda confiar en los microservicios
+	
+	
+-> Control a traves de la plataforma de mensajeria
+	-> La plataforma de mensajeria puede autorizar o no a un microservicio para que publique mensajes en un topico determinado
+	
+	-> Esta operacion se realiza en conjunto con un componente autorizador que valida los permisos y controla el uso de los microservicios sobre cada uno de los topicos que ofrece la plataforma
+	
+
+
+Resumen
+
+-> Certificado, permite hacer frente a los modelos de ataque:
+	-> Suplantacion: Este ayuda a garantizar la identidad de los participantes
+	-> Repudio: Este ayuda a garantizar la identidad de quien ejecuto una operacion
+	-> Elevacion de privilegios: Este ayuda a garantizar la identidad de quien ejecuto una operacion y por lo tanto sus privilegios
+
+
+-> Autorizador, permite hacer frente a los modelos de ataque:	
+	-> Alteración: Este apoya el control de acceso sobre quien puede modificar los datos
+	-> Exposicion: El token apoya el control de quien puede exponer informacion y consultar informacion
+	-> Repudio: Este apoya el registro de quien y cuando ejecuto una operacion
+	-> Elevacion de privilegios: Este hace parte de los niveles de autorizacion y privilegios asignados a un usuario para ejecutar una operacion
+
+-------------------------------------------------------
+
+
+Configuración usuarios RabbitMQ:
+
+Usuario por defecto: AdminUser
+Contraseña: Admnistr@tor2023
+Hash256: vf3LQMozyUlksbVdDw08ia1kbuxhTRSvuUVQ7K1+WifcGOi5
+
+Usuario: TestDriverUser
+Contraseña: C@nductorPrueba2023
+Hash256: 7Ehgg64FO2sXMmQmhOooAnrEPv/5tYe+aPWljxzNO3X2mZgu
+
+Usuario: TestSellerUser
+Contraseña: Vended@rCcp23
+Hash256: NhWjrQpDM7L+izmzA1m9CwoEOcgf4AN/+hslRzEVdeYuaHuw
+
+
+
+Usuario: CreateUserOrder
+Contraseña: CcpCreateUser@rder23
+Hash256: jsw4SqH7dG0MTccpPZM6dcJJ8XcgM3nmHz8F7jlNPM0NKhGp
+
+Usuario: UpdateUserOrder
+Contraseña: CcpUpdateUser@rder23
+Hash256: 54Pg2iEGsiayBkCoCsK4Z97sCjMFxhU5Bf2Woyncz1MAbD2d
+
+-------------------------------------------------------
+Propiedades Registro de venta POST
+
+definitions.json
+
+"name": "CreateUserOrder",
+"password_hash": "P7AJtS/VqSldieH/PKChfimblGsDir+FKQha7mi331oZ263X",
+"hashing_algorithm": "rabbit_password_hashing_sha256",
+"tags": "administrator"
+
+
+
+# Rabbitmq Configuration 
+HOST_RABBIT=rabbitmq_broker
+VIRTUAL_HOST=create_orders_vhost
+USER_QUEUE=CreateUserOrder
+PASSWORD_QUEUE=CcpCreateUser@rder23
+QUEUE=post_orders_queue
+
+# Encriptadas
+
+# Rabbitmq Configuration 
+HOST_RABBIT='gAAAAABkETnP-nKQuu1RE4I6KTTJI4pwRNpDEOJU8iv8J4JtEPEyNk8NR4UlFJ60aBknfg3tvXWrvyDZaQvMG20JjjPRwAeYKg=='
+VIRTUAL_HOST='gAAAAABkETn5S416nT9o3IsS2EgwN6ObcoaT7h1X_QqsclNlETBsMLm8I7wcHRVm6bv0zGEvVmD79W9WhwDMtI8gxQBUjv3Lzr7yHcXaI4A1N-hPyRrZ0X4='
+USER_QUEUE='gAAAAABkETpaEASUWHaEJNoKL3jBt0mJU4Hs04xMl_d4gBjzL5T8dcHDv31bjoXfE67YBUG7OmrVWZpy3ANPetuj02Oaf6q-Xw=='
+PASSWORD_QUEUE='gAAAAABkETqCblhy5N5P7oNL179zraDUyGci_pabJrS6xX4X2yEGr6vGix7xb_s9kKZph9E1ZNKn23flF4p2QmqKVo4G0oGbEO69_iZDj2bwFeoNeTx42W4='
+QUEUE='gAAAAABkETqgwNn3w2yHd8TJ07hNvv9Bv6Sn59aulDJHV7flPoYVPjNJSFvBlZZ_w_Zctf9C_vqk1i7zn03ZT6bTbI24NGXxsv3-3-hUyQ-VNp1tZ8krqTM='
+
+
+../RegistroVentasPost/security.key
+
+---------------------------------------
+
+Propiedades Registro de venta PUT
+
+definitions.json
+
+"name": "UpdateUserOrder",
+"password_hash": "ewIOcGWHKI3fIX5T9pIcDm4/W5K8j1fETWyhdZGo18LL+j9X",
+"hashing_algorithm": "rabbit_password_hashing_sha256",
+"tags": "administrator"
+
+
+# Rabbitmq Configuration 
+HOST_RABBIT=rabbitmq_broker
+VIRTUAL_HOST=update_orders_vhost
+USER_QUEUE=UpdateUserOrder
+PASSWORD_QUEUE=CcpUpdateUser@rder23
+QUEUE=put_orders_queue
+
+# Encriptadas
+
+# Rabbitmq Configuration 
+HOST_RABBIT='gAAAAABkET9Oc0ko9MkkmuTMRmknVEjS7-j7Wug0bTOMkMvAqCt2qoTqjAI6cOlZNLQ27_T7PtqMsW_8L7R5XCxxSYyvv7ugFg=='
+VIRTUAL_HOST='gAAAAABkET9jL7RkzHXrW2GQJg1EJUyj8rU0OYJL14kE3Lm8utTRdy3ryKHzdH8JLGvBc80MzCp_RnkVp5D9Jz-LkoJV8W3TiPxQ7r-FXLgRZ4EJLO9amB8='
+USER_QUEUE='gAAAAABkET-CUXOHZ900oU_vq4zpnOXG1TaKtKqEWXTMxKT2Pa6PLihnQfBg1RPe8kRN8UXrSRhJ806f9KMIDUhKoYNzor1n_Q=='
+PASSWORD_QUEUE='gAAAAABkET-cN6KFLFVSEMvdeDjdsC1NTBnDTwnn_Q8DRRvlL9BHAtIQwWffPl92gXkA7kKCajRg2w0qUkaazjFjmBnqk3cwkwT-0xCoG5oD_NQYlHHxVZQ='
+QUEUE='gAAAAABkET-0S3YfEPnVqv19eUaYce-z3Nri7AbQTmP9xQoOn8d1bF6v9scuuAGm0mAs2msnplJP5DbWV-uT2oeTLo-JdmaSkPHZ-DZnzCc-bNQRY7Lb70E='
+
+
+../RegistroVentasPut/security.key
+
+
+---------------------------------
+
+
+# Rabbitmq Configuration 
+HOST_RABBIT=rabbitmq_broker
+VIRTUAL_HOST_POST=create_orders_vhost
+USER_QUEUE_POST=CreateUserOrder
+PASSWORD_QUEUE_POST=CcpCreateUser@rder23
+QUEUE_POST=post_orders_queue
+VIRTUAL_HOST_PUT=update_orders_vhost
+USER_QUEUE_PUT=UpdateUserOrder
+PASSWORD_QUEUE_PUT=CcpUpdateUser@rder23
+QUEUE_PUT=put_orders_queue
+
+# Encriptadas
+
+# Rabbitmq Configuration 
+HOST_RABBIT='gAAAAABkEUnugFw_TjATNzOPsudygNinSCwLHNbmgCbcOwMc79e_g4RrnzGkUo7LfTdf1kieYzS8q_NHwYF7TEDBAWnKVrDPEw=='
+VIRTUAL_HOST_POST='gAAAAABkEUoHgoosjkAV_MN4XPfCrHvz4nBCfVK_PZYaunt5YniHRKNEQgZTLStKHO-6jyNrWLfD2uY-yuv2AezvW6FA_iptSDhQnaUO9drlVfKT-ibq5-Q='
+USER_QUEUE_POST='gAAAAABkEUokyEzA9bU30CaV9qw0DVMPHVj0JYhMRjiPjc0lONSot27TMgN2ey15u4sk5_womirFRDwIJobYaeTb3Gq3rmaxEA=='
+PASSWORD_QUEUE_POST='gAAAAABkEUpM3lUjCdnUC57ndvHMKcaGZ_WS1ErmShJ_onYHC-uj4LhcECChF6Vyrs9MrmlDiYRWHVGtpShHVn2bh4uU0ixYPY5vwNtzwWFsIpygE0etL_A='
+QUEUE_POST='gAAAAABkEUpqIRVinWsUKlU-b7-LPu43x3r3TLNIXuLbbf28Y_pfuWHtnhp3xO97lRXhzeNxraBF_-r4jf_WGex2X4vk76OMG--rFbNGGzNp4PwKKIk3zUU='
+VIRTUAL_HOST_PUT='gAAAAABkEUqDkXEvHkQ6A7y_lH777Efa0RLHB7iZGlfxxIwM8gBoYmAXTkWPqmYSzsbdelAaxkBR_oRqMYcgf7ZQ7mRkw7b_xG8VtLvef09wKYOHYn-HcWo='
+USER_QUEUE_PUT='gAAAAABkEUqsurLQAR_MoMMCDpcvcKJ1HaOfOvAboB0XoGBsyLLpZzpwje-z4NNtgTnU6WDlX-ruITJMqHtXUFc4BWVjPGKoeQ=='
+PASSWORD_QUEUE_PUT='gAAAAABkEUrT-zHK02aGcrQJSU9RIRn4paTFvmEc8Kl60wCi6LrzeJfkBkJaTAvuTgjshOlLpS8_GWK9LsaJF_fkec7J4GZO8VmiZfIz9zeczOHKTr72jro='
+QUEUE_PUT='gAAAAABkEUru1BFMxN2F8cna8GgwB0dwT7lmvr6U6sm9C0aDvW1ENmDDK7SP-DsuLfT_4tPGywYotrqFyt8O6cuuh1IaE2zt6Bw3r3dEbxydZtzVzC-Xqqw='
+
+
+../Ventas/security.key
+
+
+
+
+ususario modificado:
+USER_QUEUE_POST=Prueba12345
+USER_QUEUE_POST='gAAAAABkEVyZ4K2dVMESiuWH54HopmKOjSP9tCstI3Gs4EPlw_iZfMU4-_F9l6LJeySTtKESu-1Eg4EdgIaQkzIpK8MsCjFkfA=='
+
+-----------------------------------------
+
+
+secret-jwt
+
+{"user": "CreateUserOrder"}
+
+---------------------------------------
+Usuario con el perfil de repartidor
+
+ID: 1
+Usuario: userrep
+Password: User@rep23
+Rol: REP
+
+
+Usuario con el perfil de Vendedor
+
+ID: 2
+Usuario: userorder
+Password: User@rder23
+Rol: VEN
+
+Usuario con el perfil de Almacenista
+
+ID: 2
+Usuario: userinvt
+Password: User@invent23
+Rol: ALM
+
+-------------------------------
+Albumes
+
+
+Cada álbum debe caracterizarse por:
+	-> un nombre
+	-> la imagen de la carátula
+	-> la fecha de salida al mercado
+	-> una descripción
+	-> el género
+	-> la casa discográfica
+	-> el artista (o lista de artistas)
+	-> el listado de tracks. 
+	
+Criterios
+
+-> Los usuarios registrados en la aplicación pueden hacer comentarios sobre los álbumes.
+
+
+
+companion object
+
+----------------------------------
+2023-04-01
+
+{
+    "fileName": "prueba.txt",
+    "newFormat": "zip"
+}
+
+Tabla: files
+
+Columnas:
+
+id: identificador autonumerico
+timestamp: fecha y hora de la carga del archivo. Cuando se crea
+status: uploaded o processed
+update: fecha y hora de modificacion del estado del archivo
+
+
+
+
+HOgJHkXCTopE8qYEUEx/soUmnPLSd/th8mV8LI4yZxyZiUW8
+
+
+
+ConverterUser
+
+ConverterPass
+
+eA6A2hT6aU2gBCZnQgERv23A8xEloq88YRWVv83xUIPMbRtX
+
+
+----------------------------------------
+
+Validacion metodos de compresion
+
+-> zip -> Pareciera que no esta comprimiendo
+-> 7zip -> Si esta comprimiendo normal
+-> tar.gz -> Si esta comprimiendo normal 
+-> tar.bz2 -> Si esta comprimiendo normal 
+
+
+postgres
+
+rabbitmq_broker
+
+ftp_server
+
+mcs_auth_commands
+
+mcs_auth_queries
+
+mcs_tasks_commands
+
+mcs_tasks_queries
+
+mcs_files_queries
+
+celery_worker
+
+nginx_proxy
+
+
+garethflowers/ftp-server
+
+
+
+ubuntu 22.04 instalar y hacer pruebas
+
+----------------------------------------------------
+
+Maquina virtual Ubuntu
+
+Hostname: ConverterProjectVM
+Domain Name: converter.virtualbox.org
+Username: converteruser
+Password: Converter2023
+
+ServerName: converterserver
+
+
+
+https://github.com/shiomar-salazar/MISW4204-202312-SWNube.git
+
+
+
+
+MISW4204-202312-SWNube_VM.zip
+
+
+-------
+Esto sale en el parcial Semana 3 - Software en la nube,
+
+-> Nube se entiende que tiene un servicio de infraesctructura virtualizada,
+pero que tenga un datacenter virtualizado no implica que se un IaaS o nube ya que se depende de la autogestion
+
+-> Tener a la mano la formula del PUE
+
+-> Calculos con disponibilidad en Paralelo y Secuencial
+
+
+------------------------------------------------------------------------------
+
+
+AMP DataDog
+
+Url: https://us5.datadoghq.com/account/login?redirect=f
+Email: jonathansia@emptyji.com
+Password: Pruebas2023
+
+
+hexype@tutuapp.bid
+
+
+curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-MGQPPL4W8EO28ARI1EJHSRCDBT1 NEW_RELIC_ACCOUNT_ID=3895676 /usr/local/bin/newrelic install
+
+curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-MGQPPL4W8EO28ARI1EJHSRCDBT1 NEW_RELIC_ACCOUNT_ID=3895676 /usr/local/bin/newrelic install -n postgres-open-source-integration
+
+-----------------------------------
+nagiosadmin
+
+
+
+wireshark
+
+
+Zabbix
+
+
+
+-> lectura MINTIC
+
+-> Codelab
+
+
+-------------------
+
+Crean al usuario su carpetica
+
+
+Inicial archivo pdf
+Total archivos: 451
+2023-04-15 17:43:28.338986
+Final archivo pdf
+2023-04-15 17:50:41.445438
+
+
+
+
+Inicial archivo txt
+Total archivos: 427
+2023-04-15 17:57:55.507531
+Inicial archivo txt
+2023-04-15 18:00:51.440283
+
+
+quede
+"id": 452,
+
+
+
+
+systemctl start datadog-agent-sysprobe
+
+systemctl status datadog-agent-sysprobe
+
+systemctl restart datadog-agent-sysprobe
+
+sudo /etc/init.d/datadog-agent-sysprobe start
+
+sudo systemctl stop datadog-agent
+
+sudo systemctl start datadog-agent
+
+systemctl status datadog-agent
+
+
+
+
+APM New Relic
+
+Script de instalacion: curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-MGQPPL4W8EO28ARI1EJHSRCDBT1 NEW_RELIC_ACCOUNT_ID=3895676 /usr/local/bin/newrelic install
+
+URL: https://one.newrelic.com/nr1-core/install-newrelic/installation-plan?account=3895676&state=25bdb1b1-6c00-e932-c71b-40f3470e0a2c
+
+https://login.newrelic.com/login
+
+
+User: yoxami6481@fitzola.com
+
+Password: Pruebas2023
+
+
+
+
+sudo docker exec −it <container−id> echo "Welcome to tutorialspoint"
+
+
+Ingresamos como usuario root:
+sudo su
+
+Nos pedira la contraseña de administrador:
+Estudiante2021
+
+
+Una logueados como root accemos al la ruta de la carpeta MISW4204-202312-SWNube:
+cd MISW4204-202312-SWNube
+
+Ejecutaremos el comando para iniciar docker:
+docker-compose up -d
+
+Una vez finalice iniciaremos nuestro worker de la siguiente manera:
+
+Ingresamos el siguiente comando para conctarnos con el contenedor mcs_converter:
+docker exec -ti celery_worker sh
+docker exec -ti mcs_converter sh
+
+
+Despues ingresamo el comando para subir nuestro worker:
+celery -A worker.celery worker --pool=solo -l info
+
+
+
+mkdir -p /mnt/nfs_clientshare
+mount 10.128.0.5:/mnt/nfs_share /mnt/nfs_clientshare 
+
+Consultar si existe privilegios de root:
+sudo docker inspect --format='{{.HostConfig.Privileged}}' 9637fefd6352
+
+Garantrizar privilegios de root:
+docker run -d --privileged celery_worker
+
+
+
+cat > archivo_creado_desde_worker_docker.txt
+--------------------------------------------------------------------
+
+
+
+Inicial
+2023-04-15T23:42:26.610332
+
+Final
+2023-04-15T23:47:42.916245
+
+
+RESUMEN EJEUCUCIÓN PRUEBA DE CARGA - TESTCASE 2
+
+Archivos enviado:
+ArchivoPrueba2.txt
+
+Tamaño del archivo:
+17614 kb
+
+Cantidad de tareas: 
+211
+
+Hora Inicial: 
+2023-04-16T04:19:42.075490
+
+Hora Final: 
+2023-04-16T04:37:12.421266
+
+Tiempo de procesamiento de las [211] tareas:
+17:30 minutos
+
+Tiempo total de procesamiento en segundos:
+1050 segundos
+
+Tiempo promedio de procesamiento:
+1050 s / 211 tareas = 4.98 s/tarea
+
+
+Comentar 2 videos de padlet
+
+
+----------------------
+
+2023-04-19
+INGENIERIA DE SOFTWARE PARA mobileS 
+
+VA A APARECER EN EL PARCIAL
+
+DAO -> Comunicacion con bases de datos y cache
+Service Adapter -> Servicios externos
+
+
+OJO otra pregunta del parcial
+
+La conexion con Firebase seria por Service Adapter ya que DAO es conexion a bd locales (archivos, cache, bd)
+
+
+Capa de ViewModel 
+	-> Aqui manejamos como tal la logica de negocio
+
+Capa repositorio 
+	
+	-> Capa de frente frente a la capa de ViewModel
+	
+	-> permite encapsular todos los servicios asociados con datos que nosotros manejemos, esto con el fin de segregar responsabilidades. 		
+	
+	-> Limpieza y mejoramiento de los datos, manipulacion de fuentes de datos
+	
+	-> Estrategia de optencion y manejo de los datos en caso de desconetividad eventual. Permitiendo redundancia de datos. De lo consultado en internet y se replica en bd locales
+	
+	-> En el Service Adapter se realiza generalmente la construccion de la data que se necesita puntualmente
+	
+
+
+
+Patron DTO/VOs/TOs/POJO
+	-> Estructura completa de transferencia en la cual puede haber mas de una entidad
+	
+	
+LiveData<>
+	-> Tomamos los datos del repositorio que llega al ViewModel, pero se debe poner en un LiveData<Album> para que sea observable y la View reconozca los cambios
+	
+
+
+Software en la nube - Semana 3
+
+Intalación de componentes GCP
+
+1 Sola cuenta con un solo proyecto:
+-> Maquina virtual para el proyecto Web -> Jhon
+-> Maquina virtual para el worker -> Jhon
+-> Maquina virtual para el nfs -> Shiomar
+-> Instancia de SQL cloud -> Jorge
+-> Configuracion de las vpc y demas -> Jhon
+
+Otra cuenta:
+-> Maquina virtual para cliente de pruebas. Puede ser con AWS -> Haiber
+-> Separar docker compose -> Haiber 
+-> Arreglar documentación postman
+
+Pruebas
+-> Creacion de los casos de prueba. Jugar con los valores
+-> Ejecucion de los casos prueba -> Haiber 
+-> El análisis de resultados obtenidos -> Haiber
+
+Entregables
+-> Video de sustentación -> Todos
+-> Documento de arquitectura -> Jorge
+-> Documento de escenarios y resultados de las pruebas de estrés -> Shiomar
+
+
+
+
+file.save(f"{USER_FILES_PATH}{fileNameSanitized}") 
+
+
+file.save(f"/backend/shared/") 
+
+file.save(f"/backend/shared/")
+
+
+Password Ubuntu AWS:
+Welcome1
+
+
+vm_worker
+
+vm_web_server
+
+vm_file_server
+	-> shared -> sudo mkdir -p /mnt/nfs_share
+	-> /mnt/nfs_share 192.168.0.0/24(rw,sync,no_subtree_check)
+	-> sudo ufw allow from 192.168.0.0/24 to any port nfs
+--------------------------------------
+CONFIGURACION NFS
+
+Commandos NFS Server:
+
+sudo password Prueba2023
+sudo apt update && apt dist-upgrade
+sudo apt install -y nfs-kernel-server
+sudo mkdir -p /mnt/nfs_share
+sudo chown nobody:nogroup /mnt/nfs_share
+sudo chmod 777 /mnt/nfs_share
+sudo nano /etc/exports
+/mnt/nfs_share 10.128.0.4(rw,sync,no_subtree_check) #Ip del cliente
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
+sudo ufw allow from 10.128.0.4 to any port nfs
+sudo ufw status
+sudo ufw disable
+cat /etc/exports
+cd /mnt/nfs_share
+touch sample1.text sample2.text
+cd /mnt/nfs_share
+ls
+rpcinfo -p
+
+
+Cliente
+
+sudo apt update && apt dist-upgrade
+sudo apt install nfs-common
+sudo mkdir -p /mnt/nfs_clientshare
+sudo mount 10.128.0.5:/mnt/nfs_share /mnt/nfs_clientshare #Ip del server
+
+--------------------------------------
+NFS server
+
+Server: nfs-test-server
+IP: 34.134.200.170
+Usuario: ubuntu
+Password: Prueba2023
+
+
+carga inicial de 10 hilos y despues una pesada
+
+----------------------------------------------
+
+sudo mount 10.128.0.5:/mnt/nfs_share /mnt/nfs_clientshare #Ip del server
+
+
+PARA LA Nube
+
+2 de disponibilidad 
+1 POE
+
+
+-------------------------------------------------------
+Definir variables en path desde terminal en windows
+
+set path=C:\Program Files\Java\jdk-11.0.17\bin
+
+--------------------------------------------
+Instalar Stress para estresar el sistema:
+sudo apt-get install stress
+
+Ejecutar stress:
+stress -c 7 -i 4 -m 2 -t 30s
+
+------------
+
+
+
+Cuenta de servicio Google miso.pruebas2023:
+cuentaconverter-app@dauntless-bay-384421.iam.gserviceaccount.com
+
+----------------------------------------
+APLCIACIONES mobileS
+
+Forma de dar click en un elemento de una lista por posicion:
+
+val position = 0
+val listArtists = onView(withId(R.id.fragment_artist))
+//Damos click en el artista en la position 2
+//listArtists.perform(actionOnItemAtPosition<ArtistsAdapter.ArtistViewHolder>(position, click()))
+
+
+Forma de dar click en un elemento de una lista por texto que contenga:
+val artistName = onView(allOf(withId(R.id.ArtistName), withText("Chester Bennington")))
+artistName.perform(click())
+
+
+
+Creación de pruebas E2E de la ventana Listado de Coleccionistas -> Ya estaria
+
+Creación de pruebas E2E de la ventana Detalle de Álbum
+
+Integración del servicio de consulta de artista con la ventana de detalle de artista
+
+
+
+Buscando América es el primer álbum de la banda de Rubén Blades y Seis del Solar lanzado en 1984. La producción, bajo el sello Elektra, fusiona diferentes ritmos musicales tales como la salsa, reggae, rock, y el jazz latino. El disco fue grabado en Eurosound Studios en Nueva York entre mayo y agosto de 1983.
+
+
+
+«virtual machine»
+
+
+
+us-central1-a
+
+
+us-central1
+
+
+
+https://drive.google.com/file/d/1BJciIsaRVRj6HfNlUHpMjUvd6Qno_9k8/view?usp=sharing
+
+
+
+quedo
+
+
+
+
+5555
+
+783
+
+
+template-converter-app
+
+
+
+
+10.128.15.219
+
+
+6017421887 ext 19691
+Camilo Benabidez
+Codigo: 53773
+
+
+--------------------------------------
+pubsub name:
+
+tema: tasks-topic
+
+
+-------------------------------------
+Proceso
+
+ 
+
+Pedir:
+-> 27.500.000 moratoria -> Segun liquidacion abogado
+-> 34.827.060 completo segun liquidacion abogado
+-> Liquidacion Hardnetics -> 6.129.569
+
+ 
+
+Lo mismo pretenciones
+
+ 
+
+Si lo ofrecen 20.000.000 puede ser
+
+ 
+
+ 
+
+Mi Apoderado
+
+166.666 X dia de mora
+
+
+
+package:mine 
+
+
+
+
+Log.d("act", navController.toString())
+
+
+Estatus del servicio:
+systemctl status vinilos
+
+Detener servicio:
+systemctl stop vinilos
+
+Iniciar servicio:
+systemctl start vinilos
+
+Reiniciar servicio:
+systemctl restart vinilos
+
+Habilitar servicio:
+systemctl enable vinilos
+
+Deshabilitar servicio:
+systemctl disable vinilos
+
+vinilos.service
+
+--------------------------------------------------
+SESION SINCRONA SOFTWARE EN LA NUBE 2023-05-11
+--------------------------------------------------
+
+Cloud Storage
+-> Consumo de APIs, por lo que se debe considerar un cambio en los microservicios
+-> Hay mas latencia, sobre todo con archivos grandes
+-> Es mas economico, ya que cobran por almacenamiento
+-> Escala mejor que un NFS y de forma automatica,
+-> Es autogestionado, el provider se encarga de este proceso garantizando disponibilidad, tiempos, etc
+-> Sirve para almacenar objetos dinamicos (videos, archivos, backups, etc)
+-> Descargar archivos con NFS pasa por el Cloud Balancer y la capa Web, pero con Cloud Storage el usuario final el archivo se baja directamente de Cloud Storage, no pasa por las VM, Load balancer
+-> Replica en varias zonas de disponibilidad, dependiendo como se solicite (descarga lenta o rapida)
+-> Se pueden configurar policitas del ciclo de vida de archivo (como almacenar archivos con acceso rapido durante 5 años, despues configurelo como acceso lente)
+
+
+Filestore
+-> Tiene mas latencia, ya que se acceden a carpetas casi que locales 
+-> No es tan facil de escalar como el Cloud Storage
+
+
+PUB/SUB
+-> Se garatiza que el mensaje se entregue minimo una vez, pero no que se procese una sola vez
+-> Tener en cuenta temas de llamados, por costos 
+-> Validar el OnPooling, para no estar llendo al PUB/SUB a cada rato
+
+-> Es dificil garantizar que se procesen los archivos en el mismo orden, y es por la naturaleza de los sistemas distribuidos. Por ejemplo el worker tiene diferenets variables de procesamiento, como por ejemplo tamaño del archivo, que se caiga una VM
+
+
+--------------------
+
+
+
+
+
+
+--------------------------------------------------------------
+Pasos para montar un bucket como si fuera un NFS
+--------------------------------------------------------------
+Instalar todas las dependencias
+
+Crear carpeta:
+mkdir /home/gcs_shared
+
+Dar todos los permisos:
+chmod 777 /home/gcs_shared
+
+
+Montar carpeta compartida cloud storage con gcsfuse:
+gcsfuse bucket-converter-web-app /home/gcs_shared
+
+
+Desmontar carpeta compartida cloud storage con gcsfuse:
+fusermount -u /home/gcs_shared
+
+
+Comprobar montaje:
+df -h
+
+
+--------------------------------------------------------------
+Iniciar aplicacion con gunicorn
+--------------------------------------------------------------
+Dirigirnos a la ruta:
+cd /home/MISW4204-202312-SWNube/vm_web_server/services
+
+Lanzar el comando:
+gunicorn --bind 0.0.0.0:80 manager:app
+
+
+
+
+Crear el archivo Servicio:
+
+
+Accedemos a la ruta:
+/lib/systemd/system/
+
+
+ 
+Creamos el archivo
+mountgcs.service
+converterapp.service
+
+-------------------------------------------
+
+mountgcs.service
+
+nano /lib/systemd/system/mountgcs.service
+
+[Unit]
+Description=Mount gcs
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+User=root  
+ExecStart=/home/scripts_capp/mount_gcs.sh
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+
+[Install]
+WantedBy=multi-user.target
+
+
+-------------------------------------------
+
+converterapp.service
+
+nano /lib/systemd/system/converterapp.service
+
+[Unit]
+Description=Converter Web App
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/MISW4204-202312-SWNube/vm_web_server/services
+ExecStart=gunicorn --bind 0.0.0.0:80 manager:app
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+-----------------------------------------------
+
+converterworker.service
+
+nano /lib/systemd/system/converterworker.service
+
+[Unit]
+Description=Converter Worker App
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/MISW4204-202312-SWNube/vm_worker
+ExecStart=gunicorn --bind 0.0.0.0:5000 worker:app
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+-----------------------------------------------
+Damos permisos
+
+chmod 777 /home/scripts_capp/
+
+chmod u+x /home/MISW4204-202312-SWNube/vm_web_server/mount_gcs.sh
+chmod u+x /home/scripts_capp/mount_gcs.sh
+
+
+chmod u+x /home/MISW4204-202312-SWNube/vm_web_server/services/run_commands.sh
+
+chmod 777 /lib/systemd/system/mountgcs.service
+chmod 777 /lib/systemd/system/converterapp.service
+
+
+
+Reiniciamos el demonio:
+systemctl daemon-reload
+
+Habilitamos el servicio
+systemctl enable mountgcs
+systemctl enable converterapp
+systemctl enable converterworker
+
+
+Reiniciamos servicio:
+systemctl restart mountgcs
+systemctl restart converterapp
+systemctl restart converterworker
+
+
+Validamos el estatus del servicio:
+systemctl status mountgcs
+systemctl status converterapp
+systemctl status converterworker
+
+
+
+sudo umount /home/gcs_shared
+
+cd /home/MISW4204-202312-SWNube/vm_web_server/services/
+gunicorn --bind 0.0.0.0:80 manager:app
+
+
+cd /home/MISW4204-202312-SWNube/vm_worker
+gunicorn --bind 0.0.0.0:5000 worker:app
+
+------------------------------------------------------------------------------
+mobileS PRUEBAS MONKEY
+------------------------------------------------------------------------------
+Desce la terminal de Android ejecutar:
+
+Validar que dispositivos estan conectados:
+adb devices
+
+Instalar el APK generado:
+adb install .\app-debug.apk
+
+Iniciar la prueba con 100 eventos igualmente distribuidos:
+adb shell monkey -p com.example.tsdc_vinilos_equipo6 -v 100
+
+
+
+------------------------------------------------------------------------------
+mobileS PRUEBAS RECONOCIMIENTO FIREBASE
+------------------------------------------------------------------------------
+Proyecto Firebase:
+MISW4203-202312-TSDC-Vinilos
+
+
+
+Haiber61923
+
+Entregar listo
+fragment
+navegation
+layout
+
+
+
+Entregar
+servicio
+repositorio
+networkadapter
+ic_action_add
+--------------
+
+GPU Overdray
+
+El formato utilizado junto a las diversas herramientas tecnologicas, permiten un entendimiento de las diferentes tematicas presentadas, junto con una comunicación asertiva que permite discipar dudas e inquietudes surgidas en el transcurso de la materia.
+
+
+Realmente del curso no tengo recomendaciones, ya que desde mi punto de vista cumple con lo que propone.
+
+34.66.39.220
+PORT
+1019067279
+
+https://vmworker-n6d6o26cea-ue.a.run.app/api/tasks/worker
+
+https://vmworker-n6d6o26cea-ue.a.run.app/api/tasks/worker
+
+
+vm-web-converter
+
+vmwebserver-n6d6o26cea-ue.a.run.app
+
+ 2Gi and 16Gi inclusive
+
+ 
+ 1754 uniandes
+ 
+ ---------------------
+ 
+ 30 preguntas
+ 
+ de las 8 semanas
+ 
+ 
+Enviar correo a Leonardo 
+ 
+Mira 
+
+Se que termino el proceso de Mery en mayo y no hubo aumento en el salario por las razones xxxx
+
+
+
+logs-bucket-2023-06
+
+
+X-Api-Key
+
+
+cloudformationhhgs/users/123
+
+X-API-Key
+
+
+e2c5ff55-b2d1-451d-aa20-3d76bb9cc0d1
+
+67de03d5-0048-4b35-a430-c0f44774d06a
+
+
+
+Pendientes:
+
+Quedan pendientes los siguientes rubros asociados a la moto:
+
+Pago impuesto de la moto = 69.000, correspondientes a los pagos efectuados en el año 2021(32.000) y año 2022 (37.000)
+	
+Queda pendiente el proceso asociado con el traspaso de los papeles de la moto, que el objetivo es que se realice este año para que no me siga impactando en las declaraciones de renta
+
+---------------------------------------------------------------------
+QUIZ CREACION DOCKEFILE - SEMANA 1 - 2023-08-09
+---------------------------------------------------------------------
+
+Creacion imagen
+docker build -t "hello-node" -f Dockerfile .
+
+Ejecucion contenedor
+docker run --name="hello-node-container" -p=3020:3020 "hello-node"
+
+Validacion inspect 
+docker inspect hello-node-container
+
+Ejeucion comandos dentro del contenedor
+docker exec -ti hello-node-container bash
+
+
+Urgencias COLMEDICA:
+Clinica Marley
+Clinica Country
+Clinica Colina
+Fundacion Santafe
+
+
+Oscar Trujillo Aux Enfermeria:
+
+Jhon William Torres 
+Maximo 11:50
+
+
+
+3202550525
+
+Buscapina -> Inicie a tomarla a las 9:30
+Fenalgex -> Inicie a tomarla a las 9:30
+Apronax -> Inicie a tomarla a las 10:30
+Tamsulosina -> Inicie a tomarla a las 10:30
+
+
+Tamsulosina -> Inicie a tomarla a las 8:00
+
+Buscapina -> Inicie a tomarla a las 8:30
+Fenalgex -> Inicie a tomarla a las 8:30
+Apronax -> Inicie a tomarla a las 8:30
+
+Buscapina -> Inicie a tomarla a las 4:30
+Fenalgex -> Inicie a tomarla a las 4:30
+Apronax -> Inicie a tomarla a las 4:30
+
+Buscapina -> Inicie a tomarla a las 12:30
+Fenalgex -> Inicie a tomarla a las 12:30
+Apronax -> Inicie a tomarla a las 12:30
+
+
+http://{{USERS_PATH}}/users
+
+gunicorn --bind 0.0.0.0:5005 main:app
+
+gunicorn --bind 0.0.0.0:5005 .src.main:app
+
+
+Medicamentos pailas -> Toca por particular, ya que la EPS indico que era con Colmedica y Colmedica indica que el Plan 
+
+
+Comunicarse directamente con Clinica la Colina para solicitar el agendamiento de la cita. 
+
+Si Colina dice que
+
+Especialidad de Urologia solo existe esta en Colmedica
+
+Google directorio medico Colmedica, selecciono la primera opciones, sale un cuadernillo -> Selecciono profesionales adscritos, en plan selecciono la primera opcion, pone la ciudad y despues consultar
+
+Llamar a los telefonos de contacto que esta alli y decir que necesitaria una cita que voy de parte de la prepaga Colmedica y que cuanto tocaria cancelar y todo ese tema.
+
+-----------------------------------------------
+source .env.development
+-----------------------------------------------
+Ejecutar las pruebas del servicio:
+pytest
+
+Ejecutar pruebas de covertura:
+pytest --cov-fail-under=70 --cov=src
+
+Ejecutar pruebas de covertura con la generación del reporte:
+pytest --cov-fail-under=70 --cov=src --cov-report=html
+
+
+
+Arbol estructura de users
+
+users
+└── src/
+	├── __init__.py
+	├──  main.py
+	├── blueprints
+	├	├── __init__.py
+	├	└── resources.py
+	├── commands
+	├	├── __init__.py
+	├	├── authenticate.py
+	├	├── base_command.py
+	├	├── create.py
+	├	├── reset.py
+	├	└── update.py
+	├── errors
+	├	├── __init__.py
+	├	└── errors.py
+	├── models
+	├	├── __init__.py
+	├	└── models.py
+	├── queries
+	├	├── __init__.py
+	├	└── detail.py
+	├── utilities
+	├	├── __init__.py
+	├	└── utilities.py
+	└── validators
+		├── __init__.py
+		└── validators.py
+	
+Arbol de pruebas
+
+users
+└── test/
+	├── blueprints
+	├	├── resources.py
+	├	├	├── test_create_new_user
+	├	├	├── test_existing_user_creation
+	├	├	├── test_create_user_bad_request
+	├	├	├── test_update_user
+	├	├	├── test_update_user_empty_request
+	├	├	├── test_update_user_bad_request
+	├	├	├── test_update_user_non_existent
+	├	├	├── test_generate_token
+	├	├	├── test_generate_token_wrong_credentials
+	├	├	├── test_generate_token_bad_request
+	├	├	├── test_generate_token_user_non_existent
+	├	├	├── test_reset_users
+	├	├	├── test_health_check
+	├	├	├── test_detail_user
+	├	├	├── test_detail_user_without_token
+	├	├	└── test_detail_user_invalid_token	
+	├── commands
+	├	├── authenticate.py
+	├	├	├── test_generate_token
+	├	├	├── test_generate_token_wrong_credentials
+	├	├	├── test_generate_token_bad_request
+	├	├	└── test_generate_token_user_non_existent
+	├── ├── create.py
+	├	├	├── test_create_new_user
+	├	├	├── test_existing_user_creation
+	├	├	└── test_create_user_bad_request
+	├	├── update.py
+	├	├	├── test_update_user
+	├	├	├── test_update_user_empty_request
+	├	├	├── test_update_user_bad_request
+	├	├	└── test_update_user_non_existent
+	└── queries
+		└── detail.py
+			├── test_detail_user
+			├── test_detail_user_without_token
+			└── test_detail_user_invalid_token
+
+
+Cancelacion Tarjetas Av Villas
+
+
+Visa 1316 -> 9924
+
+Visa  -> 9926
+
+
+docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_USER=mads -e POSTGRES_PASSWORD=mads -e POSTGRES_DB=mads postgres:latest
+
+----------------------------------------------------------------------------
+COMANDOS PARA UTILIZAR EN GCP
+----------------------------------------------------------------------------
+
+Autenticarse en Artifact Registry:
+gcloud auth configure-docker <REGION>-docker.pkg.dev
+gcloud auth configure-docker us-central1-docker.pkg.dev
+
+
+URL:
+<REGION>-docker.pkg.dev/<ID-PROYECTO>/<NOMBRE-REPOSITORIO>/<IMAGEN>:<TAG>
+us-central1-docker.pkg.dev/s202314-proyecto-grupo8/uniandes-misw-native-calculadora-app/suma:1.0
+
+Construir imagen:
+docker build -t <URI> .
+docker build -t us-central1-docker.pkg.dev/s202314-proyecto-grupo8/uniandes-misw-native-calculadora-app/suma:1.0 .
+
+docker build -t us-central1-docker.pkg.dev/s202314-proyecto-grupo8/uniandes-misw-native-calculadora-app/memory:1.0 .
+
+
+Publicar imagen:
+docker push <URI>
+docker push us-central1-docker.pkg.dev/s202314-proyecto-grupo8/uniandes-misw-native-calculadora-app/suma:1.0
+
+docker push us-central1-docker.pkg.dev/s202314-proyecto-grupo8/uniandes-misw-native-calculadora-app/memory:1.0
+
+Ejecutar imagen en contenedor:
+docker run -p 4000:4000 <URI>
+docker run -p 4000:4000 us-central1-docker.pkg.dev/s202314-proyecto-grupo8/uniandes-misw-native-calculadora-app/suma:1.0
+
+Crear red privada en GCP:
+gcloud compute networks create <RED> --project=<ID-PROYECTO> --subnet-mode=custom --mtu=<MTU> --bgp-routing-mode=regional
+gcloud compute networks create vpn-tutoriales-misw --project=s202314-proyecto-grupo8 --subnet-mode=custom --mtu=1460 --bgp-routing-mode=regional
+
+Crear subred privada en GCP:
+gcloud compute networks subnets create <NOMBRE-SUBRED> --range=<RANGO-IP> --network=<RED-PADRE> --region=<REGION> --project=<ID-PROYECTO>
+gcloud compute networks subnets create red-k8s-tutoriales --range=192.168.32.0/19 --network=vpn-tutoriales-misw --region=us-central1 --project=s202314-proyecto-grupo8
+
+Crear red virtual GCP:
+gcloud compute addresses create red-dbs-tutoriales --global --purpose=VPC_PEERING --addresses=<RANGO-IPS> --prefix-length=24 --network=<RED> --project=<ID-PROYECTO>
+gcloud compute addresses create red-dbs-tutoriales --global --purpose=VPC_PEERING --addresses=192.168.0.0 --prefix-length=24 --network=vpn-tutoriales-misw --project=s202314-proyecto-grupo8 
+
+Otorgar acceso de administracion de redes GCP:
+gcloud services vpc-peerings connect --service=servicenetworking.googleapis.com --ranges=red-dbs-tutoriales --network=vpn-tutoriales-misw --project=s202314-proyecto-grupo8 
+
+Crear regla de firewall en GCP:
+gcloud compute firewall-rules create allow-db-ingress --direction=INGRESS --priority=1000 --network=<RED> --action=ALLOW --rules=tcp:5432 --source-ranges=<RANGO-IP> --target-tags=<TAG> --project=<ID-PROYECTO>
+gcloud compute firewall-rules create allow-db-ingress --direction=INGRESS --priority=1000 --network=vpn-tutoriales-misw --action=ALLOW --rules=tcp:5432 --source-ranges=192.168.1.0/24 --target-tags=basesdedatos --project=s202314-proyecto-grupo8
+
+Conectarse a Kuberneters en GCP:
+gcloud container clusters get-credentials uniandes-misw-cloud-native-k8s --region us-central1 --project s202314-proyecto-grupo8
+
+Ejecutar yml en kubernentes:
+kubectl apply -f k8s-service.yml
+
+Creación de secrets a traves de yaml en GCP:
+kubectl apply -f secrets.yaml
+
+
+
+-------------------------------------
+docker network ls
+
+docker network inspect s202314-proyecto-grupo8_app_net
+docker network inspect s202314-proyecto-grupo8_offer_net
+docker network inspect s202314-proyecto-grupo8_post_net
+docker network inspect s202314-proyecto-grupo8_route_net
+docker network inspect s202314-proyecto-grupo8_user_net
+
+
+docker cp b020005e24208b46d1fd72bb00088f3b72efae3a44c977916203a656950fd223:/app "C:\MISO\Ciclo5\AplicacionesNativaEnLaNube\Entrega1AppsValidator\routes"
+
+docker cp 86eef37eefc070e003535ab196570d0ac715a4ecccc69b645e74060bf64177b6:/app "C:\MISO\Ciclo5\AplicacionesNativaEnLaNube\Entrega1AppsValidator\posts"
+
+docker cp 76c91e42e05ce17b9cd271a03e4134213e2714ae4b6cc6f5534e42c6b7082953:/app "C:\MISO\Ciclo5\AplicacionesNativaEnLaNube\Entrega1AppsValidator\users"
+
+docker cp de3f3f6211aad1c49d4c910859716ce6061400719606bc74902d2eb85c0459da:/app "C:\MISO\Ciclo5\AplicacionesNativaEnLaNube\Entrega1AppsValidator\offers"
+
+Comando para copiar una carpeta de un contenedor a un carpeta local:
+docker cp <ID_CONTAINER>:<PATH_FOLDER_CONTAINER> "PATH_FOLDER_CLIENT"
+
+Ejemplo: 
+docker cp de3f3f6211aad1c49d4c910859716ce6061400719606bc74902d2eb85c0459da:/app "C:\MISO\Ciclo5\AplicacionesNativaEnLaNube\Entrega1AppsValidator\offers"
+
+-------------------------------------
+Mejoramiento de experiencia de usuario
+
+Para esta semana:
+
+
+-> Lista completa de funcionalidades priorizada, debe incluir: Haiber
+	-> Una que incluya todo tanto:
+		-> Aplicacion mobile
+		-> Aplicacion web
+	
+-> Matriz Red Route para cada uno de los siguientes: Haiber
+	-> Aplicacion mobile
+	-> Aplicacion web
+	
+-> Lista MVP, debe incluir: Haiber
+	-> Una que incluya todo tanto:
+		-> Aplicacion mobile
+		-> Aplicacion web
+	
+Entregables de arquitectura de informacion
+
+-> User Flow
+	-> Aplicacion mobile
+	-> Aplicacion web
+	
+-> Mapa de navegacion
+	-> Aplicacion mobile
+	
+-> Mapa de sitio
+	-> Aplicacion web: Haiber	
+
+
+-> Proptotipo de papel (Entregable de la semana)
+	-> Video de las pruebas del prototipo
+	-> PDF -> 
+		Powerpoint con el listado de conclusiones, problemas, errores y mejoras; por cada una describir las acciones a realizar para mejorar
+	-> Otro video explicando el prototipo corregido, cada flujo explicarlo como un tutorial
+
+
+microservice
+├── src/
+├	├── main.py
+├	├── blueprints
+├	├── commands
+├	├── errors
+├	├── models
+├	├── utilities
+├	└── validators
+└── tests/
+	├── conftest.py
+	├── blueprints
+	├── commands
+	└── commands	
+´	
+--------------------------------------------------------------
+ENTREGA 2 Nube
+--------------------------------------------------------------
+
+-> Los servicios ya implementados son inmutables
+-> Realizar la documentacion de los servicios nuevos, que incluye:
+	-> Diagrama de componentes
+	-> Diagrama de despliegue
+	-> Diagramas de actividades o secuencia para describir cada funcionalidad nueva
+
+-> Se deben implementar los siguientes servicios:
+	-> rf003-posts
+		-> Endpoint: http://{{INGRESS_PATH}}
+	
+	-> rf004-posts-offers
+		-> Endpoint: http://{{INGRESS_PATH}}/rf004/posts/{{POST_ID}}/offers
+
+	-> rf005-posts
+		-> Endpoint: http://{{INGRESS_PATH}}/rf005/posts/{{POST_ID}}
+
+	-> score -> Me toco a mi
+		-> Endpoint: http://{{INGRESS_PATH}}/score
+
+		-> Modelo componentes y despliegue es general
+		
+		-> Documentacion Microservicio Score
+		
+		
+-> Desplegar los componentes en Kuberneters de GCP		
+
+-----------------------------------------------------------
+-> OJO REPASAR IMPERATIVA Y DECLARATIVA DE KUBERNETES
+-> OJO REPASAR EN EL TWELVE FACTORS
+-> OJO TENER A LA MANO LOS QUICES
+-----------------------------------------------------------
+
+---------------------------------------------
+:CONFIGURACIÓN KUBERENTES PROYECTO ENTREGA 2:
+---------------------------------------------
+
+-> Autenticarse en Artifact Registry:
+	gcloud auth configure-docker us-central1-docker.pkg.dev
+
+-> Construir imagenes:
+
+	-> Imagen de Users:
+		docker build -t us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/users:1.0 --target prod .
+	
+	-> Imagen de Offers:
+		docker build -t  us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/offers:1.0 --target prod .
+	
+	-> Imagen de Routes:
+		docker build -t us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/routes:1.0 --target prod .
+		
+	-> Imagen de posts:
+		docker build -t us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/posts:1.0 --target prod .
+		
+	-> Imagen de scores:
+		docker build -t us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/scores:1.0 --target prod .
+
+
+-> Publicar imagenes en Artifact Registry:
+	
+	-> Publicar de Users:	
+		docker push us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/users:1.0
+	
+	-> Publicar de Offers:
+		docker push  us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/offers:1.0
+	
+	-> Publicar de Routes:
+		docker push us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/routes:1.0
+		
+	-> Publicar de posts:
+		docker push us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/posts:1.0
+		
+	-> Publicar de scores:
+		docker push us-central1-docker.pkg.dev/s202314-proyecto-grupo8/misw-native-microservices-app/scores:1.0
+
+-> Crear red virtual:
+	gcloud compute networks create vpn-s202314-proyecto-grupo8 --project=s202314-proyecto-grupo8 --subnet-mode=custom --mtu=1460 --bgp-routing-mode=regional
+
+-> Crear subred para los pods:
+	gcloud compute networks subnets create red-s202314-proyecto-grupo8 --range=192.168.32.0/19 --network=vpn-s202314-proyecto-grupo8 --region=us-central1 --project=s202314-proyecto-grupo8
+
+-> Crear sub red para la base de datos:
+	gcloud compute addresses create red-dbs-s202314-proyecto-grupo8 --global --purpose=VPC_PEERING --addresses=192.168.0.0 --prefix-length=24 --network=vpn-s202314-proyecto-grupo8 --project=s202314-proyecto-grupo8
+
+-> Otorgar accesos a la red virtual:
+	gcloud services vpc-peerings connect --service=servicenetworking.googleapis.com --ranges=red-dbs-s202314-proyecto-grupo8 --network=vpn-s202314-proyecto-grupo8 --project=s202314-proyecto-grupo8
+	
+-> Agregar regla del firewall :
+	gcloud compute firewall-rules create allow-db-ingress --direction=INGRESS --priority=1000 --network=vpn-s202314-proyecto-grupo8 --action=ALLOW --rules=tcp:5432 --source-ranges=192.168.1.0/24 --target-tags=basesdedatos --project=s202314-proyecto-grupo8
+
+-> Crear base de datos:
+	-> Instancia:
+		Nombre: s202314-proyecto-grupo8-db
+		Contraseña: PgNube202314
+		Versión: PostgreSQL 14
+		Región: us-central1
+		Disponibilidad zonal: Única
+	
+	-> Maquina y Almacenamiento:
+		Tipo de máquina: De núcleo compartido, 1 core y 1.7 GB de RAM
+		Almacenamiento 10 GB de HDD
+		No habilitar los aumentos automáticos de almacenamiento.
+	
+	-> Conexiones:
+		Asignación de IP de la instancia: privada
+		Red: vpn-s202314-proyecto-grupo8
+		Rango de IP asignado: red-dbs-s202314-proyecto-grupo8
+		
+	-> Etiquetas:
+		basesdedatos
+
+-> Crear Kubernetes:
+	Nombre Kubernetes: s202314-proyecto-grupo8-k8s
+	Red: vpn-s202314-proyecto-grupo8
+	Subred del nodo: red-s202314-proyecto-grupo8
+	Rango de direcciones del pod: 192.168.64.0/21
+	Rango de direcciones del servicio: 192.168.72.0/21
+
+-> Conectarse a Kuberneters en GCP:
+	gcloud container clusters get-credentials s202314-proyecto-grupo8-k8s --region us-central1 --project s202314-proyecto-grupo8
+
+-> Borrar todo en kubernetes lo referente a pods, services y deployments:	
+	kubectl delete all --all -n default
+
+-> Aplicar Secrets:
+	kubectl apply -f secrets.yaml
+
+-> Aplicar deployment servicios entrega 1:
+	kubectl apply -f k8s-base-layer-deployment.yaml
+	
+-> Aplicar deployment servicios entrega 2:
+	kubectl apply -f k8s-new-services-deployment.yaml	
+	
+-> Aplicar ingress con todos los servicios:
+	kubectl apply -f k8s-ingress-deloyment.yaml	
+
+-> Borrar ingress:
+	kubectl delete ingress gateway-ingress-grupo8-k8s
+
+-> kubectl scale deployment suma --replicas=2
+
+---------------------------------------------------------------
+DEFINICION MICROSERVICIO SCORES
+---------------------------------------------------------------
+
+Funcionalidades:
+
+	-> Creacion de Utilidad:
+		-> packageDescription -> Descripción del paquete a llevar
+		-> packageSize -> Tmaño del paquete a llevar (LARGE|MEDIUM|SMALL)
+		-> packageAmount -> Costo de envío de maleta
+		-> isPackageFragile -> Booleano que indica si es un paquete delicado o no
+		-> offerAmount -> Valor en dólares de la oferta para llevar el paquete
+		-> offerId -> Identificador de la oferta
+		-> postId -> Identificador de la publicación
+		-> userId -> Identificador del usuario		
+		
+		
+	-> Consulta todas las utilidades (Filtro que consulte por postId y que ordene los scores por utilidad descendiente)
+		-> id
+		-> packageDescription
+		-> packageSize
+		-> packageAmount
+		-> isPackageFragile
+		-> score
+		-> offerAmount		
+		-> offerId
+		-> postId
+		-> userId		
+		-> createdAt
+		
+
+
+offerAmount - (packageSize * packageAmount)	
+
+
+
+
+pod "offers-78db86d4cd-5crgk" deleted
+pod "posts-686d7cd454-484c7" deleted
+pod "rf003-5dc787db58-4zkgc" deleted
+pod "rf004-5b8494bfcf-lqlgn" deleted
+pod "rf005-7d79658466-zbj77" deleted
+pod "routes-5bcd4b5ccf-b2fds" deleted
+pod "scores-6f648c9644-l5tlz" deleted
+pod "users-6d5755cc97-d5xng" deleted
+service "kubernetes" deleted
+service "offers-service" deleted
+service "posts-service" deleted
+service "rf003-service" deleted
+service "rf004-service" deleted
+service "rf005-service" deleted
+service "routes-service" deleted
+service "scores-service" deleted
+service "users-service" deleted
+deployment.apps "offers" deleted
+deployment.apps "posts" deleted
+deployment.apps "rf003" deleted
+deployment.apps "rf004" deleted
+deployment.apps "rf005" deleted
+deployment.apps "routes" deleted
+deployment.apps "scores" deleted
+deployment.apps "users" deleted
+
+Ingress gateway-ingress-grupo8-k8s
+
+
+DB s202314-proyecto-grupo8-db postgres
+
+
+https://www.youtube.com/watch?v=gVRHNST9B6A&t=119s
+
+----------------------------------------------------------------------------------
+ENTREGA 3 NUBE
+----------------------------------------------------------------------------------
+
+Requerimientos:
+	
+	-> RF-006: Enfocado en almacenar tarjetas de credito
+		-> Almacenar tarjetas de creadito
+		-> Verficar tarjeta que la tarjeta sea valida o no
+		
+		-> Tiene 4 funcionalidades:
+			-> Crear tarjeta
+			-> Consultar tarjeta
+			-> Healthcheck
+			-> Reset
+		
+		-> Se debe tokenitar la informacion de la tarjeta y esa informacion se almacenaria en el campo token
+		
+		-> Toca integrarnos con una plataforma de pagos
+			-> La comunicacion es de manera sincrona (sync)
+			-> Al integrarnos con la plataforma de pagos genera el token de la tarjeta
+			-> La respuesta de la validacion de la tarjeta de credito va a demorar, es decir va a ser de tipo asincrona (async)
+			-> Despues de la respuesta de la validacion se debe enviar un correo electronico a la persona
+	
+	-> RF-007: Enfocado en verificación del usuario
+		-> Se debe verificar el usuario de forma asincrona (asyn) o sincrona (sync) a traves del consumo del servicio TrueNative 2.0
+		-> Si el usuario esta con estado POR_VERIFICAR o NO_VERIFICADO no se puede generar token de usuario
+		
+--------------------------------------------------
+Requerimiento: RF-007	
+
+Prerequisitos: Se necesita arriba el servicio Routes
+
+Historia: Como administrador del sistema deseo verificar la identidad de un usuario cuando es creado, de manera que pueda certificar que solo usuarios verificados pueden realizar publicaciones y ofertas en la plataforma.
+
+Criterios de aceptación: 
+	-> Cuando el usuario es creado, el usuario se crea con estado POR_VERIFICAR. -> Esta actualmente
+	
+	-> Mientras el usuario tenga el estado POR_VERIFICAR no podrá acceder al sistema. -> Se debe agregar validación
+	
+	-> Nuestro sistema se comunica con un proveedor de verificación de identidad para verificar el usuario. -> Se debe agregar validación
+	
+	-> El proveedor de identidad provee un puntaje de 1 a 100 sobre el análisis de identidad dependiendo de los datos brindados. Un puntaje igual o mayor de 80 indica que el usuario fue verificado, y menor, que no pudo serlo. -> Se debe agregar validación
+	
+	-> La respuesta del proveedor debe actualizar el estado del usuario, el resultado podría ser VERIFICADO o NO_VERIFICADO. -> Se debe agregar validación
+	
+	-> Si el estado del usuario es actualizado, la fecha de actualización del usuario debe ser modificada usando la fecha actual. -> Se debe agregar validación
+	
+	-> Si el usuario mantiene el estado NO_VERIFICADO no podrá ingresar a la plataforma. -> Se debe agregar validación
+	
+	-> Si el usuario queda en estado VERIFICADO, puede acceder a la plataforma para utilizar sus servicios. -> Se debe agregar validación
+	
+	-> Indiferente del resultado del proceso, el usuario debe ser notificado por medio de correo electrónico del resultado del proceso. El correo electrónico debe contener el estado final del proceso, el RUV generado por el tercero, y los datos del usuario con el que se realizó el proceso de verificación. -> Se debe agregar validación
+
+
+-> Integrar con TrueNative -> Sincrona
+
+-> Implementar callback -> 
+
+-> Enviar el correo -> 
+
+-------------------------------------------------------------------
+MAQUETACION WEB - ALARMAX PROX
+-------------------------------------------------------------------
+
+Estructura:
+
+	-> Modúlos:
+		-> login
+		-> dashboard
+		-> alarms
+		-> reminders
+		-> settings
+		
+		
+
+display: table-cell;
+  vertical-align: middle;
+  text-align: center;		
+  
+---------------------------------------------
+Estructura del Proyecto AlarmaxPro
+
+.
+└── src/
+	├
+	├── app
+	├	├── __init__.py
+	├	├── __init__.py
+	├	├── __init__.py
+	├	├── __init__.py
+	├	├── __init__.py
+	├	├── __init__.py	
+	├	├── app.component.ts
+	├	└── app.module.ts
+	├── commands
+	├	├── __init__.py
+	├	├── authenticate.py
+	├	├── base_command.py
+	├	├── create.py
+	├	├── reset.py
+	├	└── update.py
+	├── errors
+	├	├── __init__.py
+	├	└── errors.py
+	├── models
+	├	├── __init__.py
+	├	└── models.py
+	├── queries
+	├	├── __init__.py
+	├	└── detail.py
+	├── utilities
+	├	├── __init__.py
+	├	└── utilities.py
+	└── validators
+		├── __init__.py
+		└── validators.py
+
+
+
+.
+└── src/
+	├── __init__.py
+	├──  main.py
+	├── blueprints
+	├	├── __init__.py
+	├	└── resources.py
+	├── commands
+	├	├── __init__.py
+	├	├── authenticate.py
+	├	├── base_command.py
+	├	├── create.py
+	├	├── reset.py
+	├	└── update.py
+	├── errors
+	├	├── __init__.py
+	├	└── errors.py
+	├── models
+	├	├── __init__.py
+	├	└── models.py
+	├── queries
+	├	├── __init__.py
+	├	└── detail.py
+	├── utilities
+	├	├── __init__.py
+	├	└── utilities.py
+	└── validators
+		├── __init__.py
+		└── validators.py  
+		
+		
+		
+		
+
+ng build --prod		
+
+-----------------------------------------------------------
+
+2653776676131051
+
+
+
+{
+    "cardNumber": "2653776676131051",
+    "cvv": "554",
+    "expirationDate": "19/01",
+    "cardHolderName": "dion"
+} 
+
+3071665676555754
+
+6954706481704521
+
+-----------------------------------------------------------------------------------
+CAPACITACION NEORIS PROCESO DE DESARROLLO SEGURO DE SOFTWARE SSDLC
+-----------------------------------------------------------------------------------
+Fases del ciclo de vida del software
+
+-> Requerimientos:
+	-> Se determina el alcance del proyecto
+	-> Se determina los requerimientos especificos de la herramientas (su funcionalidad)
+	-> Que necesidades se deben cubrir
+	-> Se determinan cuales son los recursos que se necesitan
+	-> Cuales son las competencias que se requieren del equipo de trabajo
+	-> Se determina el presupuesto
+
+-> Diseño:
+	-> Se determinan las herramientas que se utilizaran en el proyecto
+	-> Se realiza el diseño del software
+	-> Se realiza un diseño arquitectonico de la solucion
+	-> Se abordan temas sobre interfaz de usuario y experiencia de usuario
+
+-> Desarrollo:
+	-> Se realiza la codificacion de la solucion
+	-> En esta fase los desarrolladores ralizan pruebas unitarias a las unidades de codigo que les fueron asiganadas
+
+-> Pruebas:
+	-> El equipo de prueba realiza las pruebas funcionales de la solucion
+		-> Acceso al sistema
+		-> Segregación de funciones
+		
+	-> El equipo de prueba tambien realiza pruebas no funcionales
+
+-> Lanzamiento:
+	-> Se lleva a cabo la puesta en produccion de la solucion 
+
+-> Mantenimiento: 
+	-> Se lleva a cabo la correccion de errores
+	-> Se incorporan nuevas funcionalidades
+
+-----------------------------------------------------------
+Modelos
+
+-> Modelo en cascada:
+	-> Es un procedimiento lineal que se caracteriza por dividir los proceso de desarrollo en sucesivas fases de proyecto
+	-> A diferencia de los modelos iterativos, en este modelo cada una de las fases se ejecuta una sola vez
+	-> Los resultados de cada fase sirven de insumo o entrada para la siguiente fase
+	-> Su foco se centra en los documentos y productos desarrollados
+	
+-> Modelo en V:
+	-> Es una variacion del modelo en cascada
+	-> Muestra como se relacionan las actividades de prueba con el analisis y el diseño
+	-> La codificacion forma el vertice de la V, con el analisis y diseño a la izquierda y las pruebas a la derecha
+	-> La union entre las lineas de las pruebas y las fases del analisis y diseño, representa una doble funcion:
+		-> Sirve para identificar en que fase del desarrollo se deben realizar las pruebas correspondientes
+		-> Sirve para saber a que fase de desarrollo hay que volver si se encuentran fallos en las pruebas correspondientes
+	-> El modelo en V hace mas explictas las interacciones y repeticiones de trabajo que estan ocultas en el modelo en cascada
+	-> Su foco se centra en las actividades y la correccion 
+	
+
+-> Modelo iterativo e incremental:
+	-> El proyecto se planifica en diversos bloques llamados iteraciones
+	-> Las iteraciones se pueden entender como miniproyectos
+	-> En todas las iteraciones se repite un proceso de trabajo similar para proporcionar un resultado completo sobre el producto final
+	-> El cliente puede obtener los beneficios del proyecto de forma incremental
+	-> En cada iteracion el equipo evoluciona el producto a partir de las iteraciones anteriores añadiendo nuevos requisitos o mejoras a los ya implementados
+	-> Un factor importante en este modelo, es la priorizacion de los requisitos en base al valor que generan al cliente
+	
+-> Metologias Agile:	
+	-> Comparten caracteristicas con los modelos iteractivos e incrementales, incluyendo:
+		-> El desarrollo iterativo
+		-> La comunicacion con el cliente
+		-> La reduccion de artefactos intermedios que consumen artos recursos
+	-> Las metodologias agiles se basan en el Manifiesto Agile
+		-> Documento elaborado en febrero de 2021 por exportes de la industria del software
+		-> Esta basado en la experiencia de lo que funciona y no funciona en dicho campo de la ingenieria
+	
+--------------------------------------------------
+
+CICLO SEGURO DE VIDA DE DESARROLLO DE SOFTWARE
+
+-> Es una extensión del ciclo de desarrollo de software tradicional
+-> Complementa en cada una de las fases con todas las cuestiones de seguridad y privacidad que no se consideran en los modelos tradicionales 
+
+
+Fases del ciclo de vida del software
+
+-> Requerimientos:
+	-> Se agrega la actividad de evaluacion de riesgos
+
+-> Diseño:
+	-> Se agrega la actividad de modelado de amenazas 
+	-> Se agrega la actividad de revision del diseño en materia de seguridad
+
+-> Desarrollo:
+	-> Se agrega la actividad de analisis estatico de codigo fuentes
+
+-> Pruebas:
+	-> Se agrega la actividad de pruebas de seguridad
+	-> Se agrega la actividad de revision manual de codigo fuente
+
+-> Lanzamiento:
+	-> Se agrega la actividad de evaluacion final de seguridad
+	-> Se agrega la actividad de configuracion segura
+
+-> Mantenimiento: 
+	-> Se agrega la actividad de asegurameinto operacional
+
+--------------------------------------------------
+Costo estimado de Recuperación en caso de Vulnerabilidad
+
+-> Recuperarse de una vulnerabilidad en fases mas tardias del ciclo de vida de desarrollo del software es mucho mas costoso que si se realizara en etapas mas tempranas
+
+---------------------------------------------------------
+NEORIS SSDLC - Politica y Proceso
+
+Politica: DDC-PO-SPI-SSDLC-01
+Proceso: DDC-PC-SPI-SSDLC-01
+
+-> Neoris cuenta con una politica cuya finalidad es establecer los lineamientos para el desarrollo de aplicaciones de forma segura, basandose en estandares y mejores practicas de la industria
+
+-> El proceso base de dasarrollo seguro de software apoya al equipo de trabajo para crear una aplicacion desde la perspectiva de seguridad y provacidad
+
+-> La politica indica que se deben considerar 6 etapas para el ciclo seguro de vidad del desarrollo de software:
+	
+	-> Training and Planning
+	-> Requirements Gathering
+	-> Design
+	-> Code and Build
+	-> Verification
+	-> Release
+	
+---------------------------------------------------------
+SECURE CODING STANDARDS
+
+-> Existen varios estandares de seguridad como:
+	-> CWE: Es un libro de referencia de vulnerabilidades de software y hardware 
+	-> CVE: Es una lista de vulnerabilidades de seguridad conocida. En esta lista se especifica el software y la version particular que presenta dicha vulnerabildad
+	-> NVD: Es un repositorio del gobierno de estados unidos de vulnerabildiades, los cuales estan conectados a la CVE. Este repositorio provee contenido adicional incluyendo el como corregir dicha vulnerabilidad
+	-> OWASP: Es una fundacion sin animo de lucro cuyo proposito es mejorar la seguridad del software, brindando a la comunidad herramientas y conocimiento:
+		-> OWASP Top 10: Es un documento de concientizacion estandar para desarrolladores. Representa un amplio concenzo sobre los riesgos de seguridad mas criticos para las aplicaciones web
+
+---------------------------------------------------------
+RIESGOS MAS COMUNES
+
+-> A03:2021-Inection
+	-> SQL
+	-> No SQL
+	-> Comandos del Sistema operativo
+	-> Mapeo relacional de objetos
+	-> LDAP
+	-> Lenguaje de expresion 
+	
+	-> Como identificar si una aplicacion es vulnerable:
+		-> Es vulnerable cuando la aplicacion no valida, filtra ni desinfecta los datos proporcionados por el usuario
+		-> Las consultas dinamicas o las llamadas no parametrizadas sin escape sencible al contexto, se utilizan directamente en el interprete
+	-> Como prevendir la inyeccion:
+		-> Requiere mantener los datos separados de los comandos y las consultas
+		-> La opcion preferida es utilizar una API segura
+		-> Utilice la validacion de entrada del lado del servidor Positiva o de lista Blanca
+		-> Utilice Limit y otros controles SQL dentro de las consultas para evitar la divulgacion masivas de los registros en caso de inyeccion SQL
+		-> La revision del codigo fuentes es el mejor metodo para identificar si las aplicaciones son vulnerables a las inyecciones
+		-> Se recomienda realizar pruebas automatizadas de todos los parametros, encabezados, urls, cookies, json, soap y entradas de datos xml
+
+---------------------------------------------------------
+PRACTICAS DE INGENIERIA 
+
+
+Luis Santa Ospina
+
+
+Tema si es libre eleccion?
+
+
+
+
+all-at-once, rolling, rolling with additional batch, inmutable, traffic-splitting,
+
+
+
+blacklists
+
+
+user-mcs-container
+
+
+----------------------------------------------------------------------------------------------
+CERTIFICACIONES NEORIS
+----------------------------------------------------------------------------------------------
+
+-> Proceso de Desarrollo Seguro NEORIS SSDLC
+	-> Estado: Certificado
+	-> Enlace: https://globalcampus.neoris.net/course/view.php?id=573
+	
+-> OWASP
+	-> Estado: Certificado
+	-> Enlace: https://globalcampus.neoris.net/course/view.php?id=576
+	 
+-> Ingeniería de Codigo seguro (Secure Coding Practices)
+	-> Estado: Certificado
+	-> Enlace: https://globalcampus.neoris.net/course/view.php?id=577
+
+-> Payment Card Industry - Data Security Standard (PCI - DSS)
+	-> Estado: Certificado
+	-> Enlace: https://globalcampus.neoris.net/course/view.php?id=579
+	
+-> Metodología de Desarrollo de Proyectos de Software
+	-> Enlace: https://globalcampus.neoris.net/enrol/index.php?id=289	
+	-> Branching & Versioning
+		-> Estado: Certificado
+	
+	-> Nueva metodología de Code Review (Revisión de Código Dinámico
+		-> Estado: Certificado
+
+	-> Security Code (26/03/2020) (Revisión de Código Estático)
+		-> Estado: Certificado
+	
+	-> Análisis Dinámico (Revisión de código dinámico)
+		-> Estado: Certificado
+		
+		
+--------------------------------------------------------------------------------------
+VPC
+--------------------------------------------------------------------------------------
+Red: vpc-misw4304-devops
+
+Subred de beanstalk: network-misw4304-devops
+Rango de direcciones del pod: 192.168.64.0/21
+Rango de direcciones del servicio: 192.168.72.0/21
+
+Subred de beanstalk: network-misw4304-devops
+Rango de direcciones del pod: 192.168.64.0/21
+Rango de direcciones del servicio: 192.168.72.0/21
+
+
+192.168.0.0
+
+
+--------------------------------------------------------------------------------------
+ElasticBeanStalk
+--------------------------------------------------------------------------------------
+Nombre de aplicación: blacklist-app
+Nombre del entorno: Blacklist-app-env
+
+Plataforma: Docker
+Ramificación de la plataforma: Docker running on 64bit Amazon Linux 2
+Versión de la plataforma: 3.6.2 (Recommended)
+
+
+docker run --name pgblacklistdb -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=PgBlackList202314 -e POSTGRES_DB=pgblacklistdb -d postgres:latest
+
+docker build . -t blacklist-app
+docker run --name=blacklist-app -p=5000:5000 blacklist-app
+
+docker build . -t blacklist-app-empty
+docker run --name=blacklist-app -p=5000:5000 blacklist-app-empty
+--------------------------------------------------------------------------------------
+RDS
+--------------------------------------------------------------------------------------
+
+DevOps:
+- Amazon CodeCommit (Jorge)
+- Implementar 2 API
+  - blacklist Get (Shiomar)
+  - blacklist Post (Jhon)
+- Documentacion Postman (Haiber)
+- Capturas de Pantalla del despliegue
+- 3 estrategias de despliegue
+  - Cantidad de instancias utilizadas.
+  - Describa la manera como validó que el despliegue estaba en ejecución.
+  - Capturas de pantallas de la consola de AWS con los resultados del proceso de despliegue.
+  - Hallazgos encontrados de la estrategia de despliegue
+
+
+
+
+misw4303devops-vpc-sec-group
+
+blacklist-app
+
+VPC: misw4303devops-vpc
+Rango: 192.168.0.0/16
+Grupo de seguridad VPC: misw4303devops-vpc-sec-group
+
+Subred base de datos: misw4303devops-subnet-dbs
+Rango: 192.168.32.0/21
+
+Subred base de datos: misw4303devops-subnet-apps
+Rango: 192.168.64.0/21
+
+git clone https://git-codecommit.us-east-2.amazonaws.com/v1/repos/MISW4304-DevOps
+
+
+
+172.31.0.0/16
+
+
+User: arn:aws:sts::xxx:assumed-role/xxxxx is not authorized to perform: elasticbeanstalk:PutInstanceStatistics on resource: arn:aws:elasticbeanstalk:us-east-2:xxxxx
+
+
+
+------------------------------------------------------------------------------
+Crear Kay pars
+
+KeyPairsEC2
+
+------------------------------------------------------------------------------
+
+Roles que se deben crear:
+
+aws-elasticbeanstalk-ec2-role
+Permisos
+	-> AmazonEC2FullAccess
+	-> AdministratorAccess-AWSElasticBeanstalk
+	
+
+aws-elasticbeanstalk-service-role
+Permisos
+	-> AdministratorAccess-AWSElasticBeanstalk
+	
+Roles que se crean automaticamente una vez damos la creacion de multiples instancias
+
+AWSServiceRoleForAutoScaling
+
+Permisos
+	-> AutoScalingServiceRolePolicy
+	
+AWSServiceRoleForElasticLoadBalancing
+
+Permisos
+	-> AWSElasticLoadBalancingServiceRolePolicy
+	
+--------------------------------------------------
+
+Otros roles
+
+AWSServiceRoleForElasticBeanstalk
+
+Permisos
+	-> AWSElasticBeanstalkServiceRolePolicy
+	
+AWSServiceRoleForElasticLoadBalancing	
+
+Permisos:
+	-> AWSTrustedAdvisorServiceRolePolicy
+	
+AWSServiceRoleForSupport
+
+Permisos:
+	-> AWSSupportServiceRolePolicy
+	
+	
+Nombre de aplicación: blacklist-app
+Nombre del entorno: Blacklist-app-env
+
+
+# ENV DB_USER=postgres
+# ENV DB_PASSWORD=PgBlackList202314
+# ENV DB_HOST=pgblacklistdb.ckcwjbou5asp.us-east-2.rds.amazonaws.com
+# ENV DB_PORT=5432
+# ENV DB_NAME=pgblacklistdb
+
+
+Politica de despliegue TODO A LA VEZ:
+
+Ventajas:​
+
+	-> Despliegue de la nueva versión son relativamente más rapidoz. Un despliegue demoro un poco mas de 2 minutos
+	-> Al reutilizarsen las intancias que esta funcionando actualmente, no se generan tantos costos asociados a la creación de instancias nuevas
+	-> Al tratar de desplegar una versión de nuestra aplicación y falla, el proceso de retroceso es relativamente rapido.
+	
+Desventajas:​
+
+	-> Se presenta indisponibilidad del servicio mientras termina la implementación de la nueva version. o si se genera un retroceso.
+
+-----------------------------------------------------------------------------------
+
+1. Recupere un token de autenticación y autentique su cliente de Docker en el registro.
+
+Utilice AWS CLI:
+	-> aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 963255592650.dkr.ecr.us-east-2.amazonaws.com
+
+Nota: Si recibe un error al utilizar AWS CLI, asegúrese de tener instaladas las últimas versiones de AWS CLI y Docker.
+
+2. Cree una imagen de Docker con el siguiente comando. Para obtener información sobre cómo crear un archivo de Docker desde cero, consulte las instrucciones aquí . Puede omitir este paso si ya se creó la imagen:
+	-> docker build -t python_app .
+
+3. Cuando se complete la creación, etiquete la imagen para poder enviarla a este repositorio:
+	-> docker tag python_app:latest 963255592650.dkr.ecr.us-east-2.amazonaws.com/python_app:latest
+
+4. Ejecute el siguiente comando para enviar esta imagen al repositorio de AWS recién creado:
+	-> docker push 963255592650.dkr.ecr.us-east-2.amazonaws.com/python_app:latest
+
+
+git remote -v
+
+git remote add origin codecommit::us-east-2://Repo-Pipeline-Container
+
+git remote set-url origin codecommit::us-east-2://Repo-Pipeline-Container
+
+https://git-codecommit.us-east-2.amazonaws.com/v1/repos/Repo-Pipeline-Container
+
+Access key ID: AKIA6ARUB43FIIGCYHHQ
+Secret access key: 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
+
+https://AKIA6ARUB43FIIGCYHHQ:9NW2jpEH9a2yKGTDpfLqMH9GTHPAvWop30wJovKP@git-codecommit.us-east-2.amazonaws.com/v1/repos/Repo-Pipeline-Container
+
+
+
+AWSCodePipelineServiceRole-us-east-2-Pipeline-container
+git init
+git config --global --edit
+git remote add origin codecommit::us-east-2://Repo-Pipeline-Beanstalk
+git remote set-url origin codecommit::us-east-2://Repo-Pipeline-Beanstalk
+
+https://git-codecommit.us-east-2.amazonaws.com/v1/repos/Repo-Pipeline-Beanstalk
+
+
+Carrera 88 - 73a -5
+
+git remote add origin codecommit::us-east-2://Repo-Pipeline-Beanstalk
+git remote set-url origin codecommit::us-east-2://Repo-Pipeline-Beanstalk
+https://git-codecommit.us-east-2.amazonaws.com/v1/repos/Repo-Pipeline-Beanstalk/
+
+
+----------------------------------------------------------------------------
+Base de datos
+----------------------------------------------------------------------------
+DB_USER=postgres
+DB_PASSWORD=PgBlackList202314
+DB_HOST=pgblacklistdb.ckcwjbou5asp.us-east-2.rds.amazonaws.com
+DB_PORT=5432
+DB_NAME=pgblacklistdb
+
+----------------------------------------------------------------------------
+CodeBuild
+----------------------------------------------------------------------------
+Nombre del proyecto: blacklist-code-build
+Descripción: Proyecto de construcción de la aplicación Blacklist
+
+Al rol que se crea en el codebuild se deben darle permisos
+
+
+Tipo de permisos: Elastic Container Registry
+
+Politica: ECR_Policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ecr:CompleteLayerUpload",
+                "ecr:GetAuthorizationToken",
+                "ecr:UploadLayerPart",
+                "ecr:InitiateLayerUpload",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:PutImage"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+
+----------------------------------------------------------------------------
+ElasticBeanStalk
+----------------------------------------------------------------------------
+Nombre de aplicación: blacklist-app
+Nombre del entorno: Blacklist-app-env
+Descripción del entorno: Ambiente de ejecución de la aplicación Blacklist
+
+--------------------------------------------------------
+CodeCommit:
+MISW4304-DevOps
+
+git clone codecommit::us-east-2://MISW4304-DevOps
+
+ECR:
+container_app
+
+CodeBuild:
+blacklist_codebuild
+
+CodePipeline:
+blacklist_test_pipeline
+
+
+Pipeline Exitoso:
+Inicio: 10:15
+Fin: 10:17
+
+Pipeline Fallido:
+Inicio: 10:15
+Fin: 10:17
+
+
+----------------------------------------------------------------------------------------
+CONFIGURACION ENTREGA 3 DEVOPS
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------
+Configuración RDS
+----------------------------------------------------------------------------
+DB_USER=postgres
+DB_PASSWORD=PgBlackList202314
+DB_HOST=pgblacklistdb.ckcwjbou5asp.us-east-2.rds.amazonaws.com
+DB_PORT=5432
+DB_NAME=pgblacklistdb
+
+----------------------------------------------------------------------------
+Configuración CodeCommit
+----------------------------------------------------------------------------
+Nombre: MISW4304-DevOps
+
+----------------------------------------------------------------------------
+Configuración Elastic Container Registry
+----------------------------------------------------------------------------
+Nombre: python_app
+
+----------------------------------------------------------------------------
+Configuración EC2
+----------------------------------------------------------------------------
+
+Grupos de Destino:
+
+Tipo de destino: IP Addresses
+Nombre: target-group-1
+Protocolo: HTTP
+Puerto: 5000
+
+
+Tipo de destino: IP Addresses
+Nombre: target-group-2
+Protocolo: HTTP
+Puerto: 5000
+
+----------------------------------------------------------------------------
+Configuración Balanceador de Carga
+----------------------------------------------------------------------------
+Tipo: Balanceador de Carga de Aplicaciones
+Nombre: LB-app-python
+
+------
+Redes
+------
+Grupos de seguridad
+Crear nuevo
+Nombre del grupo de seguridad: vpc-lb-sec-group
+Descripcion: Permite el acceso de load balancer 
+
+Se debe agregar la regla de entrada: IPv4	Todo el tráfico	Todo	Todo	0.0.0.0/0
+Se debe agregar la regla de salida: IPv4	Todo el tráfico	Todo	Todo	0.0.0.0/0
+
+------
+Listeners y enrutamiento
+------
+Listener 80
+
+Protocolo: HTTP
+Puerto: 80
+Action por defecto: target-group-1
+
+
+Listener 8080
+
+Protocolo: HTTP
+Puerto: 8080
+Action por defecto: target-group-2
+
+----------------------------------------------------------------------------
+Configuración Elastic Container Service
+----------------------------------------------------------------------------
+
+------
+Clusteres
+------
+Nombre: Cluster-app-python
+VPC: default
+
+------
+Definicion de tareas
+------
+Nombre de la tarea: Task-app-python
+
+
+Requsitos de Infraestructura
+
+Entorno de la aplicacion: AWS Fargate
+Sistema operativo: Linux/86_64
+CPU: .5vCPU
+Memoria: 1GB
+
+
+Rol de ejecución de tareas: ecsTaskExecutionRole
+
+
+Contenedor
+
+Nombre: Container-app-python
+URI de imagen: 407747150537.dkr.ecr.us-east-2.amazonaws.com/python_app:latest
+Puerto del contenedor: 5000
+Protocolo: TCP
+
+
+Variables de entorno
+
+DB_USER=postgres
+DB_PASSWORD=PgBlackList202314
+DB_HOST=pgblacklistdb.ckcwjbou5asp.us-east-2.rds.amazonaws.com
+DB_PORT=5432
+DB_NAME=pgblacklistdb
+
+
+------
+Servicios
+------
+
+Configuración informática (avanzada)
+
+Opciones informáticas: Tipo de lanzamiento
+
+Tipo de lanzamiento: FARGATE
+Versión de la plataforma: LATEST
+
+
+Configuración de implementación
+
+Tipo de aplicación: Servicio
+Familia: Task-app-python
+Revisión: 1 (MAS RECIENTE)
+Nombre del servicio: Service-app-python
+Tipo de servicio: Réplica
+Tareas deseadas: 2
+
+
+Opciones de implementación
+
+Tipo de implementación: Implementación azul/verde (con tecnología de AWS CodeDeploy)
+Configuración de implementación: CodeDeployDefault.ECSLinear10PercentEvery1Minutes
+Rol de servicio para CodeDeploy: arn:aws:iam::407747150537:role/ecsCodeDeployRole
+
+
+Redes
+
+VPC: standar
+Subredes: se seleccionan las 2 subrededes por defecto
+
+Grupo de seguridad
+Utilizar un grupo de seguridad existente: Seleccionar el default
+	
+	
+Equilibrio de carga
+
+Tipo de balanceador de carga: Balanceador de carga de aplicaciones
+Chulear: Usar un balanceador de carga existente
+Balanceador de carga: LB-app-python
+
+
+Contenedor
+
+Elegir el contenedor para balancear la carga: Container-app-python 5000:5000
+
+
+Agente de escucha de producción: Crear nuevo agente de escucha
+Puerto del agente de escucha de producción: 80
+Protocolo de agente de escucha de producción: HTTP
+
+Agregar un oyente de prueba: Crear nuevo agente de escucha
+Puerto del oyente de prueba: 8080
+Protocolo de agente de escucha de producción: HTTP
+
+
+Grupo de destino 1: Utilizar un grupo de destino existente
+Nombre del grupo de destino 1: target-group-1
+Ruta de comprobación de estado: /
+Protocolo de comprobación de estado: HTTP
+
+Grupo de destino 2: Utilizar un grupo de destino existente
+Nombre del grupo de destino 1: target-group-2
+Ruta de comprobación de estado: /
+Protocolo de comprobación de estado: HTTP
+
+----------------------------------------------------------------------------
+Configuración CodeBuild
+----------------------------------------------------------------------------
+Nombre del proyecto: CodeBuild-app-python
+Descripción: Proyecto de construcción de la aplicación Blacklist
+
+
+Al rol que se crea en el codebuild se deben dar los siguientes permisos:
+
+Tipo de permisos: Elastic Container Registry
+Politica: ECR_Policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ecr:CompleteLayerUpload",
+                "ecr:GetAuthorizationToken",
+                "ecr:UploadLayerPart",
+                "ecr:InitiateLayerUpload",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:PutImage"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+----------------------------------------------------------------------------
+Configuración CodePipeline
+----------------------------------------------------------------------------
+Nombre de la canalización: Pipeline-app-python
+Descripción: Proyecto de construcción de la aplicación Blacklist
+
+----------------------------------------------------------------------------
+Inicio Blue/Green: 9:33
+
+
+
+https://mca.porthouston.com/booking-inquiry-details?inquiry_number=68577714
+Booking #: 68577714
+
+
+
+U03QJNQH0SE
+
+
+U03QJNQH0SE
+
+https://uniandes-miso.slack.com/team/U03QJNQH0SE
+
+
+{
+"name": "pring_booking_info",
+"code": " print(f\"Booking #: {booking}\")\nprint(f\"Shipping Line: {shippingLine}\")\nprint(f\"Vessel: {vessel}\")\nprint(f\"Begin Receive: {receiveDate}\")\nprint(f\"Cargo Cutoff: {cutoffDate}\")\nprint(f\"Haz Cutoff: {hazCutoffDate}\")\nprint(f\"Reefer Cutoff: {reeferCutoffDate}\")"
+}
+	  
+	  
+	  
+	  
+pipeline-blacklist-app
+
+Clinisoft
+
+
+Certificacion 
+
+
+Matricula profesional: 70255-382782 TLM
+Fecha de expedición: 08/03/2018
+Cedula: 1.019.070.415 de Bogotá D.C
+
+
+
+software.engineer.hhgs@gmail.com
+
+
+cumple con los requisitos correspondientes.
+
+de que la informacion no se modifica, 
+
+
+que es legal, que no es echizo
+
+
+
+Configuración de dependencias y variables en el archivo Dockerfile​
+
+
+
+/mysqladmin/index.php
+
+
+
+Limit  (cost=0.00..11.94 rows=1 width=23)
+  ->  Seq Scan on blacklist b  (cost=0.00..11.94 rows=1 width=23)
+        Filter: ((email)::text = 'rosina100@gmail.com'::text)
+		
+
+Limit  (cost=0.27..8.29 rows=1 width=23)
+  ->  Index Only Scan using email_idx on blacklist b  (cost=0.27..8.29 rows=1 width=23)
+        Index Cond: (email = 'rosina100@gmail.com'::text)		
+		
+
+[
+  {
+    "Plan": {
+      "Node Type": "Limit",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 0.00,
+      "Total Cost": 11.94,
+      "Plan Rows": 1,
+      "Plan Width": 23,
+      "Plans": [
+        {
+          "Node Type": "Seq Scan",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Relation Name": "blacklist",
+          "Alias": "b",
+          "Startup Cost": 0.00,
+          "Total Cost": 11.94,
+          "Plan Rows": 1,
+          "Plan Width": 23,
+          "Filter": "((email)::text = 'rosina100@gmail.com'::text)"
+        }
+      ]
+    }
+  }
+]
+		
+[
+  {
+    "Plan": {
+      "Node Type": "Limit",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 0.27,
+      "Total Cost": 8.29,
+      "Plan Rows": 1,
+      "Plan Width": 23,
+      "Plans": [
+        {
+          "Node Type": "Index Only Scan",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Scan Direction": "Forward",
+          "Index Name": "email_idx",
+          "Relation Name": "blacklist",
+          "Alias": "b",
+          "Startup Cost": 0.27,
+          "Total Cost": 8.29,
+          "Plan Rows": 1,
+          "Plan Width": 23,
+          "Index Cond": "(email = 'rosina100@gmail.com'::text)"
+        }
+      ]
+    }
+  }
+]		
+
+Direccion:
+Cruz roja 134 - 9
+
+Ajuste de la factura
+
+para el back tomamos la estructura de la nube
+para front tomamos lo de agilismo
+
+
+PJ-PORT-LOGISTICS-Services
+
+PJ-PORT-LOGISTICS-Web
+
+SPL-Web
+
+PortLogistics-frontend
+
+
+
+Request:
+
+{
+	"data":{
+		"username": "Pepito"
+	}
+}
+
+Response:
+
+Solo un objeto
+{
+	"data":{
+		"username": "Pepito"
+	}
+}
+
+Lista de objetos:
+{
+	"data": [
+		{
+			"username": "Pepito"
+		},
+		{
+			"username": "Pepito2"
+		}
+	]
+}
+
+Cuando existe una respuesta  de error:
+{
+	"code": 400,
+	"description": "Párametros de entrada invalidos"
+}
+
+
+
+seal_id
+: Identificador único del sello de seguridad (primary key).
+
+seal_number
+: Número o código del sello de seguridad.
+
+seal_type
+: Tipo de sello de seguridad (por ejemplo, sello de plástico, sello metálico, sello de cable, etc.).
+
+seal_status
+: Estado del sello de seguridad (por ejemplo, activo, inactivo, roto, etc.).
+
+seal_date
+: Fecha en la que se colocó el sello de seguridad.
+
+container_id
+: Identificador del contenedor al que está asociado el sello de seguridad (foreign key que referencia la tabla "Containers").
+
+
+genset (grupo electrógeno)
+
+ISO: 45G1
+
+sz/tp/ht: 40/GP/96
+
+gross weight: 29301.96 KG
+
+safe weight:32499.89 KG
+
+tare weight: 3900.89 KG
+
+VGM (masa de la carga bruta certificada): 29301.96 KG
+
+line operator:HLC
+
+category:EXPRT
+
+Status:FCL
+
+position:V-ABX-2350S-120506-ABX-2350S
+
+temperature
+
+hazardous
+
+damaged: NONE
+
+out of gauge (Fuera de calibre): No
+
+dray status (Estado del carrete):
+
+booking: 66919866
+
+o/b carrier: ABX-2350S-0 ANTIBES EXPRESS
+
+BILLS:
+
+i/b carrier: R687612-142 R687612
+
+POL (Purto de carga): USHOU - Houston
+
+POD (Puerto final de destino): DOCAU - Caucedo
+
+destination: DOCAU
+
+trucker (Conductor o camionero): 
+
+grade (Calidad): 
+
+
+4285
+
+Application Flask Python 3.10 to encrypt and decrypt the payload of a request using middlewares
+
+
+ETL to do a full backup of database Postgresql
+
+
+
+Definicion de Servicios
+
+
+http://[HOST]:[PORT]/v1/users
+
+
+
+
+{
+	"data":{
+		"first_name": "Camilo",
+		"middle_name": "Andres",
+		"last_name": "Chaparro Camargo",
+		"email": "camichaparro@gmail.com",
+		"cell_phone": "3127894059"
+	}
+}
+
+
+first_name
+middle_name
+last_name
+email
+cell_phone
+
+
+-----------------------------------------------------------------
+docker run --name=api-acl-redis -p=5000:5000 acl-app
+docker run --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management
+
+
+
+vhost_messages
+queue_messages
+exchange_messages
+
+
+Application Flask that implements async process
+
+
+File structure for a Flask Python project that uses the Repository design pattern to communicate with a database, and exposes APIs
+
+project_name/
+    |-app.py
+    |-config.py
+    |-run.py
+    |-requirements.txt
+    |- .env
+    |- tests/
+    |   |- __init__.py
+    |   |- test_user_model.py
+    |   |- test_user_repository.py
+    |- src/
+        |- __init__.py
+        |- extensions.py
+        |- models/
+            |- __init__.py
+            |- user.py
+        |- repositories/
+            |- __init__.py
+            |- user_repository.py
+        |- resources/
+            |- __init__.py
+            |- user_resource.py
+        |- schemas/
+            |- __init__.py
+            |- user_schema.py
+        |- utils/
+            |- __init__.py
+            |- database.py
+			
+
+app.py: Contains the Flask application factory.
+config.py: Contains configuration settings for different environments (e.g., development, production).
+run.py: Runs the Flask application.
+requirements.txt: Lists the required packages for the project.
+.env: Contains environment variables for sensitive information (e.g., database credentials).
+tests/: Contains unit tests for your project.
+src/: Contains the main source code for your project.
+	extensions.py: Registers Flask extensions.
+	models/: Contains your database models.
+	repositories/: Contains your Repository classes for communicating with the database.
+	resources/: Contains your Flask-RESTful resources.
+	schemas/: Contains your Marshmallow schemas for data validation and serialization.
+	utils/: Contains utility functions and classes for your project.
+	
+
+What is the best way to structure a Python project that implements Hexagonal Architecture?
+
+
+In Hexagonal Architecture, also known as the "Ports and Adapters" pattern, the main idea is to isolate the application core from the external world. The architecture consists of two main layers: the "Application" layer, which is responsible for the use case and application logic, and the "Infrastructure" layer, which contains all the necessary classes for interaction with the external world.
+
+To implement Hexagonal Architecture in a Python project, you can follow these steps:
+
+1- Organize your project structure using the following layout:
+
+project_name/
+│
+├── application/
+│   ├── domain/
+│   │   ├── entities/
+│   │   └── repositories/
+│   │
+│   ├── use_cases/
+│   │   └── user/
+│   │       ├── commands/
+│   │       └── queries/
+│   │
+│   └── services/
+│       └── user/
+│           ├── command_handlers/
+│           └── query_handlers/
+│
+└── infrastructure/
+    ├── persistence/
+    │   └── repositories/
+    │
+    ├── presentation/
+    │   └── views/
+    │
+    └── external_interfaces/
+        └── user/
+            ├── command_adapters/
+            └── query_adapters/
+			
+
+2- Implement the "Application" layer using the following structure:
+
+	Domain: This layer contains the domain model, which includes the application entities and repositories.
+
+	Use Cases: This layer defines the use case interactions between the application core and external interfaces.
+
+	Services: This layer provides a bridge between the use cases and external interfaces, implementing the necessary interfaces to communicate with external services.			
+
+3- Implement the "Infrastructure" layer using the following structure:
+
+	Persistence: This layer is responsible for handling the persistence of the domain entities, typically by using a database or another form of data storage.
+
+	Presentation: This layer is responsible for defining the views or presentation layers that define the structure of the data presented to the user.
+
+	External Interfaces: This layer is responsible for defining the interfaces to interact with external systems or services.	
+	
+
+
+
+{
+	"data":{
+		"id": 11,
+		"name": "Notificacion cargue exitosos",
+		"rol": "Administrador",
+		"type": "Notificacion de prueba",
+		"template": "lkadsjflkajsdfajdf",
+		"description": "adfkjasdkfjasldkfjaslkdfj",
+		"status": "Activo"
+	}
+}
+	
+
+set CONNECTION_STRING=postgresql://admin:admin@notifications-db:5432/notificationsdb
+
+export CONNECTION_STRING=postgresql://admin:admin@notifications-db:5432/notificationsdb
+
+pytest --cov-fail-under=70 --cov=src
+
+{
+	"description": "adfkjasdkfjasldkfjaslkdfj",
+	"id": 2537,
+	"name": "Eliminacion exitosa"	
+}
+
+
+[
+	{
+		"description": "adfkjasdkfjasldkfjaslkdfj",
+		"id": 2537,
+		"name": "Eliminacion exitosa"	
+	},
+	{
+		"description": "adfkjasdkfjasldkfjaslkdfj",
+		"id": 2537,
+		"name": "Notificacion cargue exitoso vehiculo 414673"	
+	}
+]
+
+-----------------------------------------
+HACER UNA FUNCION EN PYTHON QUE RECORRA UN DIRECTORIO (EL DE UN PROYECTO) Y ME GENERE LA ESTRUCTURA DE CARPETAS Y Archivos
+
+HACER UNA PLANTILLA QUE SE REEMPLACE CON .format(KEY=VALUE) DE FORMA DINAMICO
+
+
+------------------------------------------------------------
+PROYECTO PYTHON CURSO CRASH ON PYTHON - GOOGLE
+------------------------------------------------------------
+
+REQUERIMIENTO:
+
+Necesitamos procesar una lista de objetos de evento usando sus atributos para generar un informe que enumere todos los usuarios actualmente conectados a las máquinas.
+
+Lisa es la hermana de Bart en los simpson
+
+Tengo mucha losa para Levantar
+
+Mi profesara lesa es muy intenligente
+
+Lusa es el nombre del marido de mi hermana
+
+Jose juega con Lasa en el parque
+
+Utilizaremos la funcion sorted(value, key=) para ordenar la información por fecha
+
+crear una funcion get_event_date(), que retorne la fecha almacenada en el objeto de eventos

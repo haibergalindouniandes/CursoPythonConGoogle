@@ -1,0 +1,6 @@
+Instalar nodemon en desarrollo
+npm i nodemon eslint eslint-config-prettier eslint-plugin-prettier prettier -D
+public/stylesheets/style.css
+Project storage in memory
+API de museos implementado en NodeJS, que permite almacenar la información en memoria. 
+Este proyecto se implemento para ser desplegado en Amazon Beanstalk a traves de CodePipeline de AWS.
