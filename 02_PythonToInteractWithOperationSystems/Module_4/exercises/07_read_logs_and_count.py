@@ -25,3 +25,6 @@ def search_logs_with_pattern(log_file, text_to_search, pattern):
     print(usernames)
 
 search_logs_with_pattern(logfile, text_to_search, r"USER \((\w+)\)$")
+
+# Ejecutar en la linea de comandos:
+# python 07_read_logs_and_count.py files/test.log CRON

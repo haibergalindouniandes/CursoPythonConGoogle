@@ -18,6 +18,7 @@ def search_with_regex_get_groups(data, pattern):
 def search_with_regex_get_3_groups(data, pattern):
     # Updated regex to match names with optional middle names, middle initials, and double surnames
     result = re.search(pattern, data)
+    print(type(result.groups()))
     if result is None:
         print("No se encontro ningun coincidencia")
     last_name = result.group(1)
@@ -35,3 +36,4 @@ search_with_regex_get_groups("Hopper, Grace M.", r"^([\w .-]*), ([\w .-]*)$")
 
 
 print(search_with_regex_get_3_groups("Kennedy, John F.", r"^(\w+),\s?(\w+)(?:\s+(\w+|\w\.)|,\s?(\w+))?(\s\w+)?$"))
+
